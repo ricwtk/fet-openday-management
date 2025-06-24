@@ -4,11 +4,12 @@ import { PanelLeft } from 'lucide-vue-next'
 </script>
 
 <template>
-  <div class="p-2 w-full bg-primary-100">
-    <PanelLeft></PanelLeft>
+  <div class="m-2 p-2 w-100% bg-primary-200 rounded-sm">
+    <Button variant="text"><PanelLeft></PanelLeft></Button>
+    <Select></Select>
     <!-- <Button>Test</Button> -->
     <!-- <Checkbox binary/> -->
-     <Drawer :visible="true"></Drawer>
+     <!-- <Drawer :visible="true"></Drawer> -->
   </div>
     <!-- <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
