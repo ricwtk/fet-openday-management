@@ -1,5 +1,7 @@
 <script setup>
-import { ref,computed } from "vue"
+import { ref,computed,useTemplateRef } from "vue"
+import { Building2, Layers2 } from 'lucide-vue-next';
+import { TabList } from "primevue";
 const dayoptions = ["2025-08-23", "2025-08-24"]
 const selectedday = ref("")
 selectedday.value = dayoptions[0]
@@ -27,6 +29,20 @@ const locationlist = {
 const locationoptions = computed(() => Object.keys(locationlist).sort())
 const selectedlocation = ref("")
 selectedlocation.value = locationoptions[0]
+
+const floorwidth = ref(Array(locationoptions.length).fill('0px'))
+const floorrefs = useTemplateRef("floors")
+const popoverloc = (ev,locidx) => {
+  let buttonwidth = ev.target.offsetWidth
+  floorwidth.value[locidx] = buttonwidth + 'px'
+  let menu = floorrefs.value[locidx]
+  menu.toggle(ev)
+}
+const formatflooroptions = (buildingname) => {
+  return Object.keys(locationlist[buildingname]).map((floor) => {
+    return { "label": floor }
+  })
+}
 </script>
 
 <template>
@@ -34,19 +50,40 @@ selectedlocation.value = locationoptions[0]
     <b>FET Open Day Management</b>
   </div>
   <div class="w-100% mt-2 flex justify-center">
-    <SelectButton v-model="selectedday" :options="dayoptions"></SelectButton>
+    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false"></SelectButton>
   </div>
-  <div class="w-100% mt-2 flex justify-center">
-    <Fieldset class="flex-1 text-center flex justify-center gap-2">
-      <template #legend>
-        <SelectButton v-model="selectedstructure" :options="structureoptions"></SelectButton>
-      </template>
-      <Button v-for="locopt in locationoptions" class="mx-1" variant="outlined">{{ locopt }}</Button>
-      <!-- <SelectButton v-model="selectedlocation" :options="locationoptions"></SelectButton> -->
-    </Fieldset>
-  </div>
+  <Tabs v-model:value="selectedstructure" class="mt-2" >
+    <TabList pt:tabList:class="justify-center">
+      <Tab v-for="structopt in structureoptions" :value="structopt">{{ structopt }}</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel value="Locations" class="flex justify-center">
+        <template v-for="(locopt, locindex) in locationoptions">
+          <Button class="mx-1" variant="outlined" @click="popoverloc($event,locindex)" aria-haspopup="true">
+            <Building2></Building2>
+            {{ locopt }}
+          </Button>
+          <Menu ref="floors" :model="formatflooroptions(locopt)" :popup="true" :pt="{
+            'root': { 
+              'style': { 
+                'min-width': floorwidth[locindex] 
+              } 
+            },
+            'itemlabel': {
+              'class': ['text-primary']
+            }
+          }">
+            <template #itemicon><span class="text-primary"><Layers2></Layers2></span></template>
+          </Menu>
+        </template>
+      </TabPanel>
+      <TabPanel value="Activities">
 
-  <div class="sidebar bg-primary-200 rounded-sm p-2 m-2"></div>
+      </TabPanel>
+    </TabPanels>
+  </Tabs>
+
+  <!-- <div class="sidebar bg-primary-200 rounded-sm p-2 m-2"></div> -->
     <!-- <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
