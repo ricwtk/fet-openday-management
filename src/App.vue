@@ -32,7 +32,8 @@ selectedlocation.value = locationoptions[0]
 
 const floorwidth = ref(Array(locationoptions.length).fill('0px'))
 const floorrefs = useTemplateRef("floors")
-const popoverloc = (ev,locidx) => {
+const popoverloc = (ev) => {
+  let locidx = Number(ev.target.getAttribute("data-locindex"))
   let buttonwidth = ev.target.offsetWidth
   floorwidth.value[locidx] = buttonwidth + 'px'
   let menu = floorrefs.value[locidx]
@@ -50,7 +51,7 @@ const formatflooroptions = (buildingname) => {
     <b>FET Open Day Management</b>
   </div>
   <div class="w-100% mt-2 flex justify-center">
-    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false"></SelectButton>
+    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" :pt="{'pcToggleButton': { 'root': { 'class': '!text-primary !bg-primary-100 !font-bold' } } }"></SelectButton>
   </div>
   <Tabs v-model:value="selectedstructure" class="mt-2" >
     <TabList pt:tabList:class="justify-center">
@@ -59,7 +60,7 @@ const formatflooroptions = (buildingname) => {
     <TabPanels>
       <TabPanel value="Locations" class="flex justify-center">
         <template v-for="(locopt, locindex) in locationoptions">
-          <Button class="mx-1" variant="outlined" @click="popoverloc($event,locindex)" aria-haspopup="true">
+          <Button class="mx-1" @click="popoverloc" aria-haspopup="true" :pt:root:data-locindex="locindex">
             <Building2></Building2>
             {{ locopt }}
           </Button>
