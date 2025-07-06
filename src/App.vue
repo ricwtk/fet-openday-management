@@ -51,7 +51,7 @@ const formatflooroptions = (buildingname) => {
     <b>FET Open Day Management</b>
   </div>
   <div class="w-100% mt-2 flex justify-center">
-    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" :pt="{'pcToggleButton': { 'root': { 'class': '!text-primary !bg-primary-100 !font-bold' } } }"></SelectButton>
+    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !font-bold"></SelectButton>
   </div>
   <Tabs v-model:value="selectedstructure" class="mt-2" >
     <TabList pt:tabList:class="justify-center">
