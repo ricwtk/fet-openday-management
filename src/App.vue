@@ -1,8 +1,18 @@
 <script setup>
-import { ref,computed,useTemplateRef } from "vue"
+import { ref,computed,useTemplateRef, onMounted, watch } from "vue"
 import { Building2, Layers2, Milestone } from 'lucide-vue-next';
 import { TabList } from "primevue";
-const dayoptions = ["2025-08-23", "2025-08-24"]
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter()
+router.afterEach((to, from) => {
+  console.log(to.params)
+  if (to.params.date) selectedday.value = to.params.date
+  if (to.params.mode) selectedstructure.value = to.params.mode
+})
+
+const dayoptionobjects = [new Temporal.PlainDate(2025, 8, 23), new Temporal.PlainDate(2025, 8, 24)]
+const dayoptions = dayoptionobjects.map(x => x.toString())
 const selectedday = ref("")
 selectedday.value = dayoptions[0]
 
@@ -11,7 +21,19 @@ const selectedstructure = ref("")
 selectedstructure.value = structureoptions[0]
 
 import { locationlist } from "./data/locationmap";
-const locationoptions = computed(() => Object.keys(locationlist).sort())
+const locationlistondate = computed(() => activitylistondate.value.reduce((loclist,activity) => {
+  if (!Object.keys(loclist).includes(activity.venue[0])) {
+    loclist[activity.venue[0]] = {}
+  }
+  if (!Object.keys(loclist[activity.venue[0]]).includes(activity.venue[1])) {
+    loclist[activity.venue[0]][activity.venue[1]] = []
+  }
+  if (!loclist[activity.venue[0]][activity.venue[1]].includes(activity.venue[2])) {
+    loclist[activity.venue[0]][activity.venue[1]].push(activity.venue[2])
+  }
+  return loclist
+}, {}))
+const locationoptions = computed(() => Object.keys(locationlistondate.value).sort())
 const selectedlocation = ref("")
 selectedlocation.value = locationoptions[0]
 
@@ -25,13 +47,23 @@ const popoverloc = (ev,locidx) => {
 }
 const flooroptions = computed(() => {
   return locationoptions.value.reduce((a,c) => {
-    a[c] = Object.keys(locationlist[c]).map((floor) => ({ 'label': floor }))
+    a[c] = Object.keys(locationlistondate.value[c]).map((floor) => ({ 'label': floor }))
     return a
   }, {})
 })
 
 import { activitylist } from "./data/activities";
-const acttypeoptions = computed(() => activitylist.reduce((acc,activity) => {
+const activitylistondate = computed(() => activitylist.filter(activity => {
+  let currentday = dayoptionobjects[dayoptions.indexOf(selectedday.value)]
+  if (activity.timing.length > 1) {
+    return (Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == 0) 
+    || (Temporal.PlainDate.compare(activity.timing[1].toPlainDate(), currentday) == 0) 
+    || ((Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == -1) && (Temporal.PlainDate.compare(activity.timing[1].toPlainDate(), currentday) == 1)) 
+  } else {
+    return (Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == 0)
+  }
+}))
+const acttypeoptions = computed(() => activitylistondate.value.reduce((acc,activity) => {
   if (!acc.includes(activity.type)) {
     acc.push(activity.type)
   }
@@ -47,7 +79,7 @@ const popoveract = (ev,acttypeidx) => {
 }
 const activityoptions = computed(() => {
   let addedtypes = []
-  return activitylist.reduce((a,c) => {
+  return activitylistondate.value.reduce((a,c) => {
     if (!addedtypes.includes(c.type)) {
       a[c.type] = []
       addedtypes.push(c.type)
@@ -61,9 +93,10 @@ const activityoptions = computed(() => {
 <template>
   <div class="p-2 w-100% rounded bg-primary-100 text-center text-primary">
     <b>FET Open Day Management</b>
+    <b>{{ $route.fullPath }}{{ $route.params }}</b>
   </div>
   <div class="w-100% mt-2 flex justify-center">
-    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !font-bold"></SelectButton>
+    <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
   </div>
   <Tabs v-model:value="selectedstructure" class="mt-2" >
     <TabList pt:tabList:class="justify-center">
