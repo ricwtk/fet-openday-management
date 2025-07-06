@@ -1,6 +1,6 @@
 <script setup>
 import { ref,computed,useTemplateRef } from "vue"
-import { Building2, Layers2 } from 'lucide-vue-next';
+import { Building2, Layers2, Milestone } from 'lucide-vue-next';
 import { TabList } from "primevue";
 const dayoptions = ["2025-08-23", "2025-08-24"]
 const selectedday = ref("")
@@ -17,20 +17,45 @@ selectedlocation.value = locationoptions[0]
 
 const floorwidth = ref(Array(locationoptions.length).fill('0px'))
 const floorrefs = useTemplateRef("floors")
-const popoverloc = (ev) => {
-  let locidx = Number(ev.target.getAttribute("data-locindex"))
+const popoverloc = (ev,locidx) => {
   let buttonwidth = ev.target.offsetWidth
   floorwidth.value[locidx] = buttonwidth + 'px'
   let menu = floorrefs.value[locidx]
   menu.toggle(ev)
 }
-const formatflooroptions = (buildingname) => {
-  return Object.keys(locationlist[buildingname]).map((floor) => {
-    return { "label": floor }
-  })
-}
+const flooroptions = computed(() => {
+  return locationoptions.value.reduce((a,c) => {
+    a[c] = Object.keys(locationlist[c]).map((floor) => ({ 'label': floor }))
+    return a
+  }, {})
+})
 
-import { activities } from "./data/activities";
+import { activitylist } from "./data/activities";
+const acttypeoptions = computed(() => activitylist.reduce((acc,activity) => {
+  if (!acc.includes(activity.type)) {
+    acc.push(activity.type)
+  }
+  return acc
+}, []))
+const activitywidth = ref(Array(acttypeoptions.length).fill('0px'))
+const activityrefs = useTemplateRef("activities")
+const popoveract = (ev,acttypeidx) => {
+  let buttonwidth = ev.target.offsetWidth
+  activitywidth.value[acttypeidx] = buttonwidth + 'px'
+  let menu = activityrefs.value[acttypeidx]
+  menu.toggle(ev)
+}
+const activityoptions = computed(() => {
+  let addedtypes = []
+  return activitylist.reduce((a,c) => {
+    if (!addedtypes.includes(c.type)) {
+      a[c.type] = []
+      addedtypes.push(c.type)
+    }
+    a[c.type].push({ "label": c.name })
+    return a
+  }, {})
+})
 </script>
 
 <template>
@@ -47,11 +72,11 @@ import { activities } from "./data/activities";
     <TabPanels>
       <TabPanel value="Locations" class="flex justify-center">
         <template v-for="(locopt, locindex) in locationoptions">
-          <Button class="mx-1" @click="popoverloc" aria-haspopup="true" :pt:root:data-locindex="locindex">
+          <Button class="mx-1" variant="outlined" @click="popoverloc($event,locindex)" aria-haspopup="true">
             <Building2></Building2>
             {{ locopt }}
           </Button>
-          <Menu ref="floors" :model="formatflooroptions(locopt)" :popup="true" :pt="{
+          <Menu ref="floors" :model="flooroptions[locopt]" :popup="true" :pt="{
             'root': { 
               'style': { 
                 'min-width': floorwidth[locindex] 
@@ -65,8 +90,25 @@ import { activities } from "./data/activities";
           </Menu>
         </template>
       </TabPanel>
-      <TabPanel value="Activities">
-
+      <TabPanel value="Activities" class="flex justify-center">
+        <template v-for="(acttypeopt, acttypeindex) in acttypeoptions">
+          <Button class="mx-1" variant="outlined" @click="popoveract($event,acttypeindex)" aria-haspopup="true">
+            <Milestone></Milestone>
+            {{ acttypeopt }}
+          </Button>
+          <Menu ref="activities" :model="activityoptions[acttypeopt]" :popup="true" :pt="{
+            'root': { 
+              'style': { 
+                'min-width': activitywidth[acttypeindex] 
+              } 
+            },
+            'itemlabel': {
+              'class': ['text-primary']
+            }
+          }">
+            <template #itemicon><span class="text-primary"><Layers2></Layers2></span></template>
+          </Menu>
+        </template>
       </TabPanel>
     </TabPanels>
   </Tabs>
