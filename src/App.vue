@@ -1,7 +1,7 @@
 <script setup>
 import { ref,computed,useTemplateRef, onMounted, watch } from "vue"
 import { Building2, Layers2, Milestone } from 'lucide-vue-next';
-import { TabList } from "primevue";
+import { Breadcrumb, TabList } from "primevue";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter()
@@ -9,6 +9,7 @@ router.afterEach((to, from) => {
   console.log(to.params)
   if (to.params.date) selectedday.value = to.params.date
   if (to.params.mode) selectedstructure.value = to.params.mode
+  currentpagenavigationpath.value = [to.params.date, to.params.mode, to.params.main, to.params.sub].map(x => ({ "label": x }))
 })
 
 const dayoptionobjects = [new Temporal.PlainDate(2025, 8, 23), new Temporal.PlainDate(2025, 8, 24)]
@@ -88,6 +89,8 @@ const activityoptions = computed(() => {
     return a
   }, {})
 })
+
+const currentpagenavigationpath = ref([])
 </script>
 
 <template>
@@ -145,4 +148,12 @@ const activityoptions = computed(() => {
       </TabPanel>
     </TabPanels>
   </Tabs>
+
+  <Breadcrumb pt:root:class="!bg-primary rounded" :model="currentpagenavigationpath" 
+  :pt="{ 
+    'itemLabel': {'class': 'text-white font-bold' }, 
+    'separator': { 'class': '!text-white' } ,
+  }">
+    <template #separator> / </template>
+  </Breadcrumb>
 </template>
