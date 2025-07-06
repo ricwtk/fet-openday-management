@@ -4,7 +4,6 @@ import Aura from '@primeuix/themes/aura';
 import './style.css'
 import App from './App.vue'
 import { createWebHistory, createRouter } from 'vue-router'
-import Root from './Root.vue';
 
 const app = createApp(App)
 app.use(PrimeVue, {
