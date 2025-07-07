@@ -4,6 +4,8 @@ import { Building2, Layers2, Milestone } from 'lucide-vue-next';
 import { Breadcrumb, TabList } from "primevue";
 import { useRoute, useRouter } from "vue-router";
 
+import FetlabsB1 from "./assets/fetlabs-B1.svg?component"
+
 const router = useRouter()
 router.afterEach((to, from) => {
   console.log(to.params)
@@ -156,4 +158,17 @@ const currentpagenavigationpath = ref([])
   }">
     <template #separator> / </template>
   </Breadcrumb>
+
+  <Card>
+    <template #title>FET Labs / B1</template>
+    <template #content>
+      <div class="flex justify-center">
+        <div class="relative">
+          <!-- <FetlabsB1 class="h-auto"/> -->
+          <img src="./assets/fetlabs-b1.svg" style="display: block; position: absolute;width:100px;" />
+          <Button class="absolute top-0 left-0">abc</Button>
+        </div>
+      </div>
+    </template>
+  </Card>
 </template>
