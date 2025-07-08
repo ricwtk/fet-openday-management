@@ -164,9 +164,10 @@ const currentpagenavigationpath = ref([])
     <template #content>
       <div class="flex justify-center">
         <div class="relative">
-          <!-- <FetlabsB1 class="h-auto"/> -->
-          <img src="./assets/fetlabs-b1.svg" style="display: block; position: absolute;width:100px;" />
-          <Button class="absolute top-0 left-0">abc</Button>
+          <FetlabsB1>
+            <!-- <img src="./assets/fetlabs-b1.svg" style="display: block; position: absolute;width:100px;" /> -->
+          </FetlabsB1>
+          <Button class="!absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">abc</Button>
         </div>
       </div>
     </template>
