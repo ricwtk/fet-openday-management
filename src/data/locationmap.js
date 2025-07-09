@@ -1,31 +1,43 @@
 export const locationlist = {
   "FET Labs": {
+    "Mezzanine": {
+      "mapfile": "fetlabs-Mezzanine.svg",
+      "rooms": {
+        
+      }
+    },
+    "L3": {
+      "mapfile": "fetlabs-L3.svg",
+      "rooms": {
+        
+      }
+    },
     "L2": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-L2.svg",
       "rooms": {
         
       }
     },
     "L1": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-L1.svg",
       "rooms": {
         
       }
     },
     "G": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-G.svg",
       "rooms": {
         
       }
     },
     "B1": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-B1.svg",
       "rooms": {
         
       }
     },
     "B2": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-B2.svg",
       "rooms": {
         
       }
@@ -33,7 +45,7 @@ export const locationlist = {
   },
   "University Building": {
     "L3": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-B1.svg",
       "rooms": {
         
       }
@@ -41,13 +53,13 @@ export const locationlist = {
   },
   "Graduate Centre": {
     "G": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-B1.svg",
       "rooms": {
         
       }
     },
     "LG": {
-      "mapfile": "map-filename",
+      "mapfile": "fetlabs-B1.svg",
       "rooms": {
         
       }

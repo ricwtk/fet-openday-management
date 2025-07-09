@@ -4,6 +4,8 @@ import { Building2, Layers2, Milestone } from 'lucide-vue-next';
 import { Breadcrumb, TabList } from "primevue";
 import { useRoute, useRouter } from "vue-router";
 
+import TopBar from "./components/Topbar.vue";
+
 import FetlabsB1 from "./assets/fetlabs-B1.svg?component"
 
 const router = useRouter()
@@ -96,10 +98,6 @@ const currentpagenavigationpath = ref([])
 </script>
 
 <template>
-  <div class="p-2 w-100% rounded bg-primary-100 text-center text-primary">
-    <b>FET Open Day Management</b>
-    <b>{{ $route.fullPath }}{{ $route.params }}</b>
-  </div>
   <div class="w-100% mt-2 flex justify-center">
     <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
   </div>
