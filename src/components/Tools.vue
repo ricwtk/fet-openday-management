@@ -17,5 +17,5 @@ const toolSubRoutes = allRoutes.find(r => r.path == "/tools").children
     </Button>
   </Fieldset>
 
-  <router-view class="my-2"/>
+  <router-view/>
 </template>

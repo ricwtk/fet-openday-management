@@ -33,9 +33,10 @@ const addCoordinate = (event) => {
   const { width, height } = event.target.getBoundingClientRect()
   let newroomname = findUniqueRoomName(Object.keys(selectedfloor.value.rooms))
   selectedfloor.value.rooms[newroomname] = {
-    "x": xcoord/width,
-    "y": ycoord/height
+    "x": Math.round(xcoord/width*10000)/100,
+    "y": Math.round(ycoord/height*10000)/100
   }
+  console.log(prettyRoomsJSON.value)
 }
 
 const findUniqueRoomName = (allroomnames) => {
@@ -50,8 +51,8 @@ const findUniqueRoomName = (allroomnames) => {
 const coordinateTableData = computed(() => {
   return Object.keys(selectedfloor.value.rooms).sort().map((room) => ({
     "name": room,
-    "x": Math.round(selectedfloor.value.rooms[room].x*10000)/100,
-    "y": Math.round(selectedfloor.value.rooms[room].y*10000)/100
+    "x": selectedfloor.value.rooms[room].x,
+    "y": selectedfloor.value.rooms[room].y
   }))
 })
 
@@ -89,6 +90,8 @@ const markerContextItems = ref([
     command: () => { deleteRoom(selectedMarkerRoomName.value) }
   }
 ])
+
+const prettyRoomsJSON = computed(() => JSON.stringify(selectedfloor.value.rooms,null,2))
 </script>
 
 <template>
@@ -107,22 +110,24 @@ const markerContextItems = ref([
           <Marker></Marker>
         </div>
       </div>
-      <div>
-        <DataTable :value="coordinateTableData" tableStyle="min-width: 50rem" editMode="cell" @cell-edit-complete="onNameUpdated">
-          <Column field="name" header="Name" :pt="columndefinition">
-            <template #editor="{ data, field }">
-              <InputText v-model="data[field]" autofocus fluid />
-            </template>
-          </Column>
-          <Column field="x" header="% from left" :pt="columndefinition"></Column>
-          <Column field="y" header="% from top" :pt="columndefinition"></Column>
-          <Column header="Delete" :pt="columndefinition">
-            <template #body="{ data, field }">
-              <Button variant="link" @click="deleteRoom(data.name)"><MapPinMinusInside/></Button>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+      <Message severity="warn">The location assignments are not automatically saved. Copy the JSON object (at the bottom of the page) and update the locationmap.js for persistent data.</Message>
+      <DataTable :value="coordinateTableData" tableStyle="min-width: 50rem" editMode="cell" @cell-edit-complete="onNameUpdated">
+        <Column field="name" header="Name" :pt="columndefinition">
+          <template #editor="{ data, field }">
+            <InputText v-model="data[field]" autofocus fluid />
+          </template>
+        </Column>
+        <Column field="x" header="% from left" :pt="columndefinition"></Column>
+        <Column field="y" header="% from top" :pt="columndefinition"></Column>
+        <Column header="Delete" :pt="columndefinition">
+          <template #body="{ data, field }">
+            <Button variant="link" @click="deleteRoom(data.name)"><MapPinMinusInside/></Button>
+          </template>
+        </Column>
+      </DataTable>
+      <Panel :header="`JSON object for ${selectedfloor.fname}`">
+        <code class="text-start"><pre style="background-color:black" class="text-white p-2 rounded">{{ prettyRoomsJSON }}</pre></code>
+      </Panel>
     </div>
   </FieldSet>
   <ContextMenu ref="markermenu" :model="markerContextItems" @hide="selectedMarkerRoomName = null"></ContextMenu>
