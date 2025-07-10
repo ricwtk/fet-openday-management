@@ -126,7 +126,7 @@ const prettyRoomsJSON = computed(() => JSON.stringify(selectedfloor.value.rooms,
         </Column>
       </DataTable>
       <Panel :header="`JSON object for ${selectedfloor.fname}`">
-        <code class="text-start"><pre style="background-color:black" class="text-white p-2 rounded">{{ prettyRoomsJSON }}</pre></code>
+        <code class="text-start"><pre style="background-color:black" class="text-white p-2 rounded">{{ `"${selectedfloor.fname}": `+prettyRoomsJSON }}</pre></code>
       </Panel>
     </div>
   </FieldSet>
