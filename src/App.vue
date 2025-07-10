@@ -6,7 +6,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import TopBar from "./components/Topbar.vue";
 
-import FetlabsB1 from "./assets/fetlabs-B1.svg?component"
+import FetlabsB1 from "./assets/mapfiles/fetlabs-B1.svg?component"
 
 const router = useRouter()
 router.afterEach((to, from) => {
