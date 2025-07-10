@@ -3,6 +3,7 @@ import { defineAsyncComponent, ref, watch, shallowRef, computed } from "vue";
 import { locationlist } from "../data/locationmap";
 import { useRoute } from "vue-router";
 import { Circle, CircleDot, MapPinMinusInside } from 'lucide-vue-next';
+import Marker from "../components/Marker.svg"
 
 console.log(locationlist)
 const buildings = ref(Object.keys(locationlist).map(bname => {
@@ -69,7 +70,10 @@ const columndefinition = {
     <div class="flex flex-col align-center gap-2" v-if="selectedfloor">
       <div class="relative self-center w-full md:w-8/10 xl:w-6/10 text-primary" @click="addCoordinate">
         <component :is="selectedfloor.component" class="!w-full !h-full"/>
-        <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" v-for="{ x, y } in coordinateTableData" :style="{ 'left': `${x}%`, 'top': `${y}%` }"><CircleDot></CircleDot></div>
+        <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" v-for="{ name, x, y } in coordinateTableData" :style="{ 'left': `${x}%`, 'top': `${y}%` }" v-tooltip.right="{ value: name }">
+          <!-- <CircleDot></CircleDot> -->
+          <Marker></Marker>
+        </div>
       </div>
       <div>
         <DataTable :value="coordinateTableData" tableStyle="min-width: 50rem">

@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 const allRoutes = router.getRoutes();
 const toolSubRoutes = allRoutes.find(r => r.path == "/tools").children
-console.log(toolSubRoutes)
+// console.log(toolSubRoutes)
 // const filteredRoutes = allRoutes.filter(route => route.path == "/tools")
 </script>
 

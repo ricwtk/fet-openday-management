@@ -7,6 +7,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Tools from './components/Tools.vue';
 import Root from './Root.vue';
 import LocationAssignment from './components/LocationAssignment.vue';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(Root)
 app.use(PrimeVue, {
@@ -39,4 +40,5 @@ const router = createRouter({
   routes
 })
 app.use(router)
+app.directive('tooltip', Tooltip)
 app.mount('#app')
