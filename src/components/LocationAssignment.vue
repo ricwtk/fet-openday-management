@@ -48,7 +48,7 @@ const findUniqueRoomName = (allroomnames) => {
 }
 
 const coordinateTableData = computed(() => {
-  return Object.keys(selectedfloor.value.rooms).map((room) => ({
+  return Object.keys(selectedfloor.value.rooms).sort().map((room) => ({
     "name": room,
     "x": Math.round(selectedfloor.value.rooms[room].x*10000)/100,
     "y": Math.round(selectedfloor.value.rooms[room].y*10000)/100
@@ -57,38 +57,75 @@ const coordinateTableData = computed(() => {
 
 const columndefinition = {
   'columnheadercontent': { 'class': '!justify-center'},
-  'bodycell': { 'class': '!text-center' },
+  'bodycell': { 'class': '!text-center w-1/4' },
   'headercell': { 'class': '!bg-primary !text-white' },
-  
 }
+
+const onNameUpdated = (evdata) => {
+  let originalroomname = evdata.value
+  let newroomname = evdata.newValue
+  if (Object.keys(selectedfloor.value.rooms).includes(newroomname)) {
+    console.log(`Room name ${newroomname} duplicated. Room ${originalroomname} remain as is`)
+  } else {
+    selectedfloor.value.rooms[newroomname] = selectedfloor.value.rooms[originalroomname]
+    delete selectedfloor.value.rooms[originalroomname]
+  }
+}
+
+const deleteRoom = (roomname) => {
+  delete selectedfloor.value.rooms[roomname]
+}
+
+const markermenu = ref()
+const selectedMarkerRoomName = ref()
+const onRightClickMarker = (event, roomname) => {
+  selectedMarkerRoomName.value = roomname
+  markermenu.value.show(event)
+}
+const markerContextItems = ref([
+  {
+    label: "Delete",
+    icon: "",
+    command: () => { deleteRoom(selectedMarkerRoomName.value) }
+  }
+])
 </script>
 
 <template>
   <FieldSet class="text-center" :legend="route.name">
     <CascadeSelect placeholder="Select a floor" :options="buildings" optionLabel="fname" optionGroupLabel="bname" :optionGroupChildren="['floors']" v-model="selectedfloor"/>
 
-    <div class="flex flex-col align-center gap-2" v-if="selectedfloor">
+    <div class="flex flex-col align-center gap-2 mt-2" v-if="selectedfloor">
       <div class="relative self-center w-full md:w-8/10 xl:w-6/10 text-primary" @click="addCoordinate">
         <component :is="selectedfloor.component" class="!w-full !h-full"/>
-        <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" v-for="{ name, x, y } in coordinateTableData" :style="{ 'left': `${x}%`, 'top': `${y}%` }" v-tooltip.right="{ value: name }">
+        <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" 
+        v-for="{ name, x, y } in coordinateTableData" :style="{ 'left': `${x}%`, 'top': `${y}%` }" 
+        v-tooltip.right="{ value: name }"
+        @contextmenu="onRightClickMarker($event,name)"
+        >
           <!-- <CircleDot></CircleDot> -->
           <Marker></Marker>
         </div>
       </div>
       <div>
-        <DataTable :value="coordinateTableData" tableStyle="min-width: 50rem">
-          <Column field="name" header="Name" :pt="columndefinition"></Column>
+        <DataTable :value="coordinateTableData" tableStyle="min-width: 50rem" editMode="cell" @cell-edit-complete="onNameUpdated">
+          <Column field="name" header="Name" :pt="columndefinition">
+            <template #editor="{ data, field }">
+              <InputText v-model="data[field]" autofocus fluid />
+            </template>
+          </Column>
           <Column field="x" header="% from left" :pt="columndefinition"></Column>
           <Column field="y" header="% from top" :pt="columndefinition"></Column>
           <Column header="Delete" :pt="columndefinition">
-            <template #body>
-              <Button variant="link"><MapPinMinusInside/></Button>
+            <template #body="{ data, field }">
+              <Button variant="link" @click="deleteRoom(data.name)"><MapPinMinusInside/></Button>
             </template>
           </Column>
         </DataTable>
       </div>
     </div>
   </FieldSet>
+  <ContextMenu ref="markermenu" :model="markerContextItems" @hide="selectedMarkerRoomName = null"></ContextMenu>
 </template>
 
 <style scoped>
