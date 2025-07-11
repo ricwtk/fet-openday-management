@@ -10,7 +10,7 @@ const toolSubRoutes = allRoutes.find(r => r.path == "/tools").children
 
 <template>
   <Fieldset legend="Tools" class="text-center">
-    <Button v-for="r in toolSubRoutes">
+    <Button v-for="r in toolSubRoutes" class="m-2">
       <router-link :to="{ name: r.name }">
         {{ r.name }}
       </router-link>

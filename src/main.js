@@ -8,6 +8,7 @@ import Tools from './components/Tools.vue';
 import Root from './Root.vue';
 import LocationAssignment from './components/LocationAssignment.vue';
 import Tooltip from 'primevue/tooltip';
+import EventCreation from './components/EventCreation.vue';
 
 const app = createApp(Root)
 app.use(PrimeVue, {
@@ -29,9 +30,8 @@ const routes = [
   { 
     path: "/tools", name: "Tools", component: Tools, 
     children: [
-      {
-        path: "locationassignment", name: "Location Assignment", component: LocationAssignment
-      }
+      { path: "locationassignment", name: "Location Assignment", component: LocationAssignment },
+      { path: "eventcreation", name: "Event Creation", component: EventCreation },
     ]
   }
 ]
