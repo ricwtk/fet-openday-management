@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { activitylist } from "../data/activities";
 
 const initialFormValues = ref({
   type: "Workshop",
@@ -14,6 +15,8 @@ const initialFormValues = ref({
 const onSubmit = (event) => {
   console.log(event.values)
 }
+
+const prettyEventsJSON = computed(() => JSON.stringify(activitylist,null,2))
 </script>
 
 <template>
@@ -37,7 +40,7 @@ const onSubmit = (event) => {
           <label for="event-start">Start</label>
         </FloatLabel>
         <FloatLabel variant="in" class="flex flex-1">
-          <DatePicker id="event-end" name="end" fluid pt:root:class="flex flex-1"></DatePicker>
+          <DatePicker id="event-end" name="end" dateFormat="yy-mm-dd" showTime hourFormat="24" fluid pt:root:class="flex flex-1"></DatePicker>
           <label for="event-end">End</label>
         </FloatLabel>
       </div>
@@ -53,6 +56,10 @@ const onSubmit = (event) => {
     </Form>
   </Fieldset>
 
-  <Message severity="warn">The events are not automatically saved. Copy the JSON object (at the bottom of the page) and update the activities.js for persistent data.</Message>
+  <Message severity="warn" class="my-2">The events are not automatically saved. Copy the JSON object (at the bottom of the page) and update the activities.js for persistent data.</Message>
+
+  <Fieldset :legend="`JSON object for events`">
+    <code class="text-start"><pre style="background-color:black" class="text-white p-2 rounded">{{ prettyEventsJSON }}</pre></code>
+  </Fieldset>
 
 </template>
