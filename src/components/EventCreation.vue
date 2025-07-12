@@ -2,6 +2,11 @@
 import { ref, computed } from 'vue';
 import { activitylist } from "../data/activities";
 
+const activities = ref(activitylist.map(activity => {
+  activity.timing = activity.timing.map(timing => Temporal.PlainDateTime.from(timing))
+  return activity
+}))
+
 const initialFormValues = ref({
   type: "Workshop",
   name: "",
@@ -12,11 +17,26 @@ const initialFormValues = ref({
   remarks: ""
 })
 
-const onSubmit = (event) => {
-  console.log(event.values)
+const formatDateTime = (dt) => {
+  let dtTemporal = new Temporal.PlainDateTime(dt.getFullYear(), dt.getMonth()+1, dt.getDate(), dt.getHours(), dt.getMinutes())
+  return dtTemporal.toString()
 }
 
-const prettyEventsJSON = computed(() => JSON.stringify(activitylist,null,2))
+const onSubmit = (event) => {
+  console.log(event.values)
+
+  console.log(formatDateTime(event.values.start))
+}
+
+const getDateString = (tprl) => { return `${tprl.year}-${tprl.month}-${tprl.day}` }
+const formatTimingForDisplay = (timing) => {
+  if (timing.length = 1) { return getDateString(timing[0])}
+  else {
+    
+  }
+}
+
+const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
 </script>
 
 <template>
@@ -57,6 +77,26 @@ const prettyEventsJSON = computed(() => JSON.stringify(activitylist,null,2))
   </Fieldset>
 
   <Message severity="warn" class="my-2">The events are not automatically saved. Copy the JSON object (at the bottom of the page) and update the activities.js for persistent data.</Message>
+
+  <DataView :value="activities">
+    <template #list="slotProps">
+      <Panel v-for="({ type, name, venue, timing, pic, remarks }, index) in slotProps.items" class="mt-2">
+        <template #header><span class="font-bold">{{ name }}</span></template>
+        <template #icons><span class="font-light">{{ type }}</span></template>
+        <div>
+          <div>{{ timing[0].year }} - {{ timing[1] }}</div>
+          <Breadcrumb :model="venue" pt:root:class="!m-0 !p-0">
+            <template #item="{ item }"><span>{{ item }}</span></template>
+          </Breadcrumb>
+          <div>
+            <Chip v-for="p in pic" :label="p" class="m-1"></Chip>
+          </div>
+          <Fieldset legend="Remarks" v-if="remarks" pt:content:class="whitespace-pre">{{ remarks }}</Fieldset>
+        </div>
+      </Panel>
+      <div>{{ slotProps }}</div>
+    </template>
+  </DataView>
 
   <Fieldset :legend="`JSON object for events`">
     <code class="text-start"><pre style="background-color:black" class="text-white p-2 rounded">{{ prettyEventsJSON }}</pre></code>
