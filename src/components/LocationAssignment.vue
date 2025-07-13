@@ -15,7 +15,7 @@ const buildings = ref(Object.keys(locationlist).map(bname => {
     f.parent = b
     f.mapfile = locationlist[bname][fname].mapfile
     f.mapfilepath = new URL(`../assets/mapfiles/${f.mapfile}`, import.meta.url).href
-    f.rooms = "rooms" in Object.keys(locationlist[bname][fname]) ? locationlist[bname][fname].rooms : {}
+    f.rooms = Object.keys(locationlist[bname][fname]).includes('rooms') ? locationlist[bname][fname].rooms : {}
     f.component = shallowRef( defineAsyncComponent(() => import(/* @vite-ignore */f.mapfilepath)) )
     return f
   })
@@ -95,6 +95,7 @@ const prettyRoomsJSON = computed(() => JSON.stringify(selectedfloor.value.rooms,
 </script>
 
 <template>
+  <!-- <div>{{ buildings }}</div> -->
   <FieldSet class="text-center" :legend="route.name">
     <CascadeSelect placeholder="Select a floor" :options="buildings" optionLabel="fname" optionGroupLabel="bname" :optionGroupChildren="['floors']" v-model="selectedfloor"/>
 
