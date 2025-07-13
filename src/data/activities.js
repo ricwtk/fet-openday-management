@@ -5,10 +5,10 @@ export const activitylist = [
     "venue": [
       "FET Labs",
       "G",
-      "Physics Lab"
+      "Engineering Physics Lab"
     ],
     "timing": [
-      "2025-08-23T14:00:00",
+      "2025-08-23T14:00:00", 
       "2025-08-23T16:00:00"
     ],
     "pic": [
@@ -26,7 +26,7 @@ export const activitylist = [
       "Carpentry Workshop"
     ],
     "timing": [
-      "2025-08-23T10:00:00",
+      "2025-08-23T10:00:00", 
       "2025-08-23T17:00:00"
     ],
     "pic": [

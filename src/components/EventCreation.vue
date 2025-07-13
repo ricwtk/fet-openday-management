@@ -1,39 +1,79 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { activitylist } from "../data/activities";
+import { locationlist } from "../data/locationmap";
+import { CalendarClock, MapPinned, Users, Copy, SquareX } from 'lucide-vue-next';
 
 const activities = ref(activitylist.map(activity => {
   activity.timing = activity.timing.map(timing => Temporal.PlainDateTime.from(timing))
   return activity
 }))
 
-const initialFormValues = ref({
-  type: "Workshop",
-  name: "",
-  venue: [],
-  start: "",
-  end: "",
-  pic: [],
-  remarks: ""
-})
+const venueselectionlist = ref(Object.keys(locationlist).map(b => ({
+  name: b,
+  floors: Object.keys(locationlist[b]).map(f => ({
+    name: f,
+    rooms: Object.keys(locationlist[b][f].rooms).map(r => ({ rname: r, floor: f, building: b })),
+    building: b
+  }))
+})))
 
-const formatDateTime = (dt) => {
+const neweventform = ref()
+
+const datetoTemporal = (dt) => {
   let dtTemporal = new Temporal.PlainDateTime(dt.getFullYear(), dt.getMonth()+1, dt.getDate(), dt.getHours(), dt.getMinutes())
-  return dtTemporal.toString()
+  return dtTemporal
 }
 
-const onSubmit = (event) => {
-  console.log(event.values)
-
-  console.log(formatDateTime(event.values.start))
+const temporaltoDate = (t) => {
+  return new Date(t.toString())
 }
 
-const getDateString = (tprl) => { return `${tprl.year}-${tprl.month}-${tprl.day}` }
+const zpad = (v,n=2) => ("0".repeat(n-1) + v).slice(-n)
+
+const getDateString = (tprl) => { return `${tprl.year}-${zpad(tprl.month)}-${zpad(tprl.day)}` }
+const getTimeString = (tprl) => { return `${zpad(tprl.hour)}:${zpad(tprl.minute)}` }
+const getDateTimeString = (tprl) => { return `${getDateString(tprl)} ${getTimeString(tprl)}` }
 const formatTimingForDisplay = (timing) => {
-  if (timing.length = 1) { return getDateString(timing[0])}
+  if (timing.length == 1) { return getDateString(timing[0])}
   else {
-    
+    let startstring = getDateTimeString(timing[0])
+    let endstring = getDateTimeString(timing[1])
+    let start = timing[0].toPlainDate()
+    let end = timing[1].toPlainDate()
+    if (start.equals(end)) { endstring = getTimeString(timing[1]) }
+    return `${startstring} - ${endstring}`
   }
+}
+
+const onCreateNewEvent = (ev) => {
+  let activity = {
+    type: ev.values.type,
+    name: ev.values.name,
+    venue: [ev.values.venue.building, ev.values.venue.floor, ev.values.venue.rname],
+    timing: [datetoTemporal(ev.values.start), datetoTemporal(ev.values.end)],
+    pic: ev.values.pic.split(",").map(v => v.trim()),
+    remarks: ev.values.remarks
+  }
+  activities.value.push(activity)
+}
+
+const deleteevent = (eventindex) => {
+  activities.value.splice(eventindex, 1)
+}
+
+const duplicateevent = (eventindex) => {
+  let activity = activities.value[eventindex]
+  let eventdetails = {
+    type: activity.type,
+    name: activity.name,
+    venue: venueselectionlist.value.find(v => v.name == activity.venue[0]).floors.find(v => v.name == activity.venue[1]).rooms.find(v => v.rname == activity.venue[2]),
+    start: temporaltoDate(activity.timing[0]),
+    end: temporaltoDate(activity.timing[1]),
+    pic: activity.pic.join(", "),
+    remarks: activity.remarks
+  }
+  neweventform.value.setValues(eventdetails)
 }
 
 const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
@@ -41,7 +81,7 @@ const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
 
 <template>
   <Fieldset legend="Create event" :pt="{ 'content': { 'class': 'flex flex-col justify-center' } }">
-    <Form v-slot="$form"  @submit="onSubmit" class="flex flex-col gap-2">
+    <Form v-slot="$form" ref="neweventform" @submit="onCreateNewEvent" class="flex flex-col gap-2">
       <FloatLabel variant="in">
         <InputText id="event-type" name="type" type="text" pt:root:class="w-1/1"></InputText>
         <label for="event-type">Event Type</label>
@@ -51,7 +91,7 @@ const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
         <label for="event-name">Event Name</label>
       </FloatLabel>
       <FloatLabel variant="in">
-        <CascadeSelect id="event-venue" name="venue" pt:root:class="w-1/1"></CascadeSelect>
+        <CascadeSelect id="event-venue" name="venue" pt:root:class="w-1/1" :options="venueselectionlist" optionLabel="rname" :optionGroupChildren="['floors', 'rooms']" optionGroupLabel="name" breakpoint="10000000px"></CascadeSelect>
         <label for="event-venue">Venue</label>
       </FloatLabel>
       <div class="flex gap-2">
@@ -66,7 +106,7 @@ const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
       </div>
       <FloatLabel variant="in">
         <InputText id="event-pic" name="pic" pt:root:class="w-1/1"></InputText>
-        <label for="event-pic">Person In Charge</label>
+        <label for="event-pic">Person In Charge (separate with comma)</label>
       </FloatLabel>
       <FloatLabel variant="in">
         <Textarea id="event-remarks" name="remarks" pt:root:class="w-1/1"></Textarea>
@@ -78,23 +118,38 @@ const prettyEventsJSON = computed(() => JSON.stringify(activities.value,null,2))
 
   <Message severity="warn" class="my-2">The events are not automatically saved. Copy the JSON object (at the bottom of the page) and update the activities.js for persistent data.</Message>
 
-  <DataView :value="activities">
+  <DataView :value="activities" pt:content:class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
     <template #list="slotProps">
-      <Panel v-for="({ type, name, venue, timing, pic, remarks }, index) in slotProps.items" class="mt-2">
+      <Panel v-for="({ type, name, venue, timing, pic, remarks }, index) in slotProps.items" :pt="{
+        root: { class: 'mt-2 !flex flex-col' },
+        contentcontainer: { class: '!flex flex-col grow'},
+        content: { class: 'grow' }
+      }">
         <template #header><span class="font-bold">{{ name }}</span></template>
         <template #icons><span class="font-light">{{ type }}</span></template>
-        <div>
-          <div>{{ timing[0].year }} - {{ timing[1] }}</div>
-          <Breadcrumb :model="venue" pt:root:class="!m-0 !p-0">
-            <template #item="{ item }"><span>{{ item }}</span></template>
-          </Breadcrumb>
-          <div>
-            <Chip v-for="p in pic" :label="p" class="m-1"></Chip>
+        <template #footer>
+          <div class="flex flex-row gap-2">
+            <Button @click="deleteevent(index)">Delete<SquareX></SquareX></Button>
+            <Button @click="duplicateevent(index)">Duplicate<Copy></Copy></Button>
+          </div>
+        </template>
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row gap-2"><CalendarClock class="flex-shrink-0"/>{{ formatTimingForDisplay(timing) }}</div>
+          <div class="flex flex-row gap-2">
+            <MapPinned class="flex-shrink-0"></MapPinned>
+            <Breadcrumb :model="venue" pt:root:class="!m-0 !p-0">
+              <template #item="{ item }"><span>{{ item }}</span></template>
+            </Breadcrumb>
+          </div>
+          <div class="flex flex-row gap-2 items-center">
+            <Users class="flex-shrink-0"></Users>
+            <div>
+              <Chip v-for="p in pic" :label="p" class="m-1"></Chip>
+            </div>
           </div>
           <Fieldset legend="Remarks" v-if="remarks" pt:content:class="whitespace-pre">{{ remarks }}</Fieldset>
         </div>
       </Panel>
-      <div>{{ slotProps }}</div>
     </template>
   </DataView>
 
