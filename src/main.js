@@ -9,6 +9,8 @@ import Root from './Root.vue';
 import LocationAssignment from './components/LocationAssignment.vue';
 import Tooltip from 'primevue/tooltip';
 import EventCreation from './components/EventCreation.vue';
+import ByLocations from './components/ByLocations.vue';
+import ByActivities from './components/ByActivities.vue';
 
 const app = createApp(Root)
 app.use(PrimeVue, {
@@ -26,7 +28,13 @@ app.use(PrimeVue, {
 
 const routes = [
   // { path: "/:date?/:mode?/:main?/:sub?", component: App },
-  { path: "/", component: App },
+  { 
+    path: "/:date?", component: App, props: true,
+    children: [
+      { path: "locations", name: "By Locations", component: ByLocations },
+      { path: "activities", name: "By Activities", component: ByActivities }
+    ]
+  },
   { 
     path: "/tools", name: "Tools", component: Tools, 
     children: [
