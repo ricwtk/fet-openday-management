@@ -74,16 +74,18 @@ watch(selectedstructure, (newV) => {
 //   }, {})
 // })
 
-// const activitylistondate = computed(() => activitylist.filter(activity => {
-//   let currentday = dayoptionobjects[dayoptions.indexOf(selectedday.value)]
-//   if (activity.timing.length > 1) {
-//     return (Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == 0) 
-//     || (Temporal.PlainDate.compare(activity.timing[1].toPlainDate(), currentday) == 0) 
-//     || ((Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == -1) && (Temporal.PlainDate.compare(activity.timing[1].toPlainDate(), currentday) == 1)) 
-//   } else {
-//     return (Temporal.PlainDate.compare(activity.timing[0].toPlainDate(), currentday) == 0)
-//   }
-// }))
+const activitylistondate = computed(() => activitylist.filter(activity => {
+  let currentday = dayoptionobjects[dayoptions.indexOf(selectedday.value)]
+  let timing = activity.timing.map(t => Temporal.PlainDate.from(t))
+  if (timing.length > 1) {
+    return (Temporal.PlainDate.compare(timing[0], currentday) == 0) 
+    || (Temporal.PlainDate.compare(timing[1], currentday) == 0) 
+    || ((Temporal.PlainDate.compare(timing[0], currentday) == -1) && (Temporal.PlainDate.compare(timing[1], currentday) == 1)) 
+  } else {
+    return (Temporal.PlainDate.compare(timing[0], currentday) == 0)
+  }
+}))
+
 // const acttypeoptions = computed(() => activitylistondate.value.reduce((acc,activity) => {
 //   if (!acc.includes(activity.type)) {
 //     acc.push(activity.type)
@@ -118,7 +120,9 @@ watch(selectedstructure, (newV) => {
     <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
     <SelectButton v-if="selectedday" v-model="selectedstructure" :options="structureoptions" optionLabel="name" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
   </div>
-  <router-view />
+  <router-view v-slot="{ Component }" class="mt-2">
+    <component :is="Component" :activities="activitylistondate"></component>
+  </router-view>
   <!-- <Tabs v-model:value="selectedstructure" class="mt-2" >
     <TabList pt:tabList:class="justify-center">
       <Tab v-for="structopt in structureoptions" :value="structopt">{{ structopt }}</Tab>

@@ -1,12 +1,10 @@
 <script setup>
 import { defineProps } from 'vue';
-
 const props = defineProps({
-  activities: Array
+  building: String,
+  floor: String
 })
 </script>
 <template>
-  <Panel>
-    {{ props.activities }}
-  </Panel>
+  Floor map {{ building }} {{ floor }}
 </template>
