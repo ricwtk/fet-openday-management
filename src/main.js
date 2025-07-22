@@ -33,12 +33,12 @@ const routes = [
     path: "/:date?", component: App, props: true,
     children: [
       { 
-        path: "locations", name: "By Locations", component: ByLocations,
+        path: "locations", name: "By Locations", component: ByLocations, props: true,
         children: [
-          { path: ":building/:floor", name: "Floor Map", component: FloorMap }
+          { path: ":building/:floor", name: "Floor Map", component: FloorMap, props: true }
         ]
       },
-      { path: "activities", name: "By Activities", component: ByActivities }
+      { path: "activities", name: "By Activities", component: ByActivities, props: true }
     ]
   },
   { 

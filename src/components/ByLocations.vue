@@ -4,7 +4,10 @@ import { ref, computed, defineProps, useTemplateRef } from 'vue';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
+  date: String,
   activities: Array,
+  building: String,
+  floor: String
 })
 
 const router = useRouter()
@@ -79,6 +82,9 @@ const openmap = (building, floor) => { console.log(building, floor)
         </Menu>
       </template>
     </div>
-    <router-view />
+    <!-- <router-view v-slot="{ Component }" class="">
+      <component :is="Component" :building="props.building" :floor="props.floor"></component>
+    </router-view> -->
+    <router-view></router-view>
   </Panel>
 </template>

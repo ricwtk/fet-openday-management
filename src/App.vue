@@ -12,6 +12,8 @@ import { activitylist } from "./data/activities";
 
 const props = defineProps({
   date: String,
+  building: String,
+  floor: String
 })
 
 const router = useRouter()
