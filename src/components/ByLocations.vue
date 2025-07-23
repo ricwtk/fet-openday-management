@@ -49,6 +49,14 @@ const openmap = (building, floor) => { console.log(building, floor)
   router.push({ name: "Floor Map", params: { building: building, floor: floor } })
 }
 
+const activitiesatthisloc = computed(() => {
+  if (props.building && props.floor) {
+    return props.activities.filter(act => {
+      return act.venue[0] == props.building && act.venue[1] == props.floor
+    })
+  } else return []
+})
+
 // import { useRouter } from 'vue-router'
 
 // const router = useRouter
@@ -82,9 +90,8 @@ const openmap = (building, floor) => { console.log(building, floor)
         </Menu>
       </template>
     </div>
-    <!-- <router-view v-slot="{ Component }" class="">
-      <component :is="Component" :building="props.building" :floor="props.floor"></component>
-    </router-view> -->
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" :activities="activitiesatthisloc"></component>
+    </router-view>
   </Panel>
 </template>

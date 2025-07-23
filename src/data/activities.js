@@ -22,7 +22,7 @@ export const activitylist = [
     "name": "Sarawak Drone",
     "venue": [
       "FET Labs",
-      "G",
+      "B1",
       "Carpentry Workshop"
     ],
     "timing": [
