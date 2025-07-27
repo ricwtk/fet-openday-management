@@ -40,11 +40,14 @@ const maphierarchy = ref([
       <template #content>
         <div class="relative w-full text-primary" v-if="floordata.component">
           <component :is="floordata.component" class="!w-full !h-full"/>
-          <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" 
-            v-for="{ venue } in props.activities" :style="{ 'left': `${floordata.rooms[venue[2]].x}%`, 'top': `${floordata.rooms[venue[2]].y}%` }" 
-          >
-            <Marker></Marker>
-          </div>
+          <template v-for="{ venue } in props.activities">
+            <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" 
+              v-if="floordata.rooms[venue[2]]"
+              :style="{ 'left': `${floordata.rooms[venue[2]].x}%`, 'top': `${floordata.rooms[venue[2]].y}%` }" 
+            >
+              <Marker></Marker>
+            </div>
+          </template>
         </div>
 
         <!-- <component v-if="floordata.component" :is="floordata.component" class="!w-full !h-full"/> -->

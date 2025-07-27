@@ -24,14 +24,20 @@ const router = useRouter()
 //   currentpagenavigationpath.value = [to.params.date, to.params.mode, to.params.main, to.params.sub].map(x => ({ "label": x }))
 // })
 
+onMounted(() => {
+  if (props.date == "") {
+    selectedday.value = dayoptions[0]
+  }
+})
+
 const dayoptionobjects = activitylist.map(activity => activity.timing.map(t => Temporal.PlainDate.from(t))).flat().filter((val, idx, self) => {
   return self.findIndex(v => (v.toString() == val.toString()) ) == idx
 })
 const dayoptions = dayoptionobjects.map(x => x.toString())
 const selectedday = ref(props.date)
 watch(selectedday, (newV) => {
-  if (selectedstructure.value == "") router.push(`/${newV}`)
-  else router.push({ name: selectedstructure.value.name, params: { date: newV } })
+  if (selectedstructure.value) router.push({ name: selectedstructure.value.name, params: { date: newV } }) 
+  else router.push(`/${newV}`)
 })
 
 const moderoutes = router.getRoutes().filter(r => {
@@ -77,14 +83,18 @@ watch(selectedstructure, (newV) => {
 // })
 
 const activitylistondate = computed(() => activitylist.filter(activity => {
-  let currentday = dayoptionobjects[dayoptions.indexOf(selectedday.value)]
-  let timing = activity.timing.map(t => Temporal.PlainDate.from(t))
-  if (timing.length > 1) {
-    return (Temporal.PlainDate.compare(timing[0], currentday) == 0) 
-    || (Temporal.PlainDate.compare(timing[1], currentday) == 0) 
-    || ((Temporal.PlainDate.compare(timing[0], currentday) == -1) && (Temporal.PlainDate.compare(timing[1], currentday) == 1)) 
+  if (selectedday.value) {
+    let currentday = dayoptionobjects[dayoptions.indexOf(selectedday.value)]
+    let timing = activity.timing.map(t => Temporal.PlainDate.from(t))
+    if (timing.length > 1) {
+      return (Temporal.PlainDate.compare(timing[0], currentday) == 0) 
+      || (Temporal.PlainDate.compare(timing[1], currentday) == 0) 
+      || ((Temporal.PlainDate.compare(timing[0], currentday) == -1) && (Temporal.PlainDate.compare(timing[1], currentday) == 1)) 
+    } else {
+      return (Temporal.PlainDate.compare(timing[0], currentday) == 0)
+    }
   } else {
-    return (Temporal.PlainDate.compare(timing[0], currentday) == 0)
+    return true
   }
 }))
 
