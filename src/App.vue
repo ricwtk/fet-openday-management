@@ -45,7 +45,7 @@ const moderoutes = router.getRoutes().filter(r => {
   return (pathparts.length == 3 && pathparts[1] == ":date?")
 })
 const structureoptions = moderoutes
-const selectedstructure = ref(moderoutes.find(r => r.name == router.currentRoute.value.name))
+const selectedstructure = ref(moderoutes.find(r => router.currentRoute.value.matched.map(v => v.name).includes(r.name)))
 watch(selectedstructure, (newV) => {
   router.push({ name: newV.name, params: { date: props.date } })
 })
