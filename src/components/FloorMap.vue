@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, defineAsyncComponent } from 'vue';
+import { defineProps, ref, defineAsyncComponent, computed } from 'vue';
 import Marker from "../components/Marker.svg"
 const props = defineProps({
   date: String,
@@ -14,17 +14,22 @@ const maps = import.meta.glob('../assets/mapfiles/*.svg', {
 })
 
 import { locationlist } from "../data/locationmap";
-var floordata = locationlist[props.building][props.floor]
-floordata.mapfilepath = `../assets/mapfiles/${floordata.mapfile}`
+const floordata = computed(() => {
+  let x = locationlist[props.building][props.floor]
+  x.mapfilepath = `../assets/mapfiles/${x.mapfile}`
+  x.component = defineAsyncComponent(maps[x.mapfilepath])
+  return x
+})
+
 // floordata.mapfilepath = new URL(`../assets/mapfiles/${floordata.mapfile}`, import.meta.url).href
-floordata.component = defineAsyncComponent(maps[floordata.mapfilepath])
+
 // floordata.component = shallowRef( defineAsyncComponent(async () => { 
 //   const mod = import(/* @vite-ignore */`${floordata.mapfilepath}?component`)
 //   return mod.default
 // }) )
 console.log(floordata)
 
-const maphierarchy = ref([
+const maphierarchy = computed(() => [
   { label: props.building },
   { label: props.floor },
 ])
