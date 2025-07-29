@@ -2,7 +2,7 @@
 import { defineProps, ref, defineAsyncComponent, computed, nextTick } from 'vue';
 import Marker from "../components/Marker.svg"
 import { formatTimingForDisplay } from '../utils/timeformat'
-import { CalendarClock, Users, MapPinned } from "lucide-vue-next"
+import Activity from './Activity.vue';
 const props = defineProps({
   date: String,
   building: String,
@@ -108,7 +108,8 @@ const toggleDot = (event, roomact) => {
   <DataView :value="props.activities" pt:root:class="my-3">
     <template #list="slotProps">
       <div class="flex flex-col gap-2">
-        <Card v-for="(item, index) in slotProps.items" :key="index">
+        <Activity v-for="(item, index) in slotProps.items" :key="index" :activity="item"></Activity>
+        <!-- <Card v-for="(item, index) in slotProps.items" :key="index">
           <template #title>
             <div class="flex flex-row gap-2">
               <span class="font-bold">{{ item.name }}</span>
@@ -131,9 +132,8 @@ const toggleDot = (event, roomact) => {
               </div>
               <Message>{{ item.remarks ? item.remarks : "No remarks" }}</Message>
             </div>
-            <!-- {{ item }} -->
           </template>
-        </Card>
+        </Card> -->
       </div>
     </template>
   </DataView>
