@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { activitylist } from "../data/activities";
 import { locationlist } from "../data/locationmap";
 import { CalendarClock, MapPinned, Users, Copy, SquareX } from 'lucide-vue-next';
+import { formatTimingForDisplay } from '../utils/timeformat'
 
 const activities = ref(activitylist.map(activity => {
   activity.timing = activity.timing.map(timing => Temporal.PlainDateTime.from(timing))
@@ -27,23 +28,6 @@ const datetoTemporal = (dt) => {
 
 const temporaltoDate = (t) => {
   return new Date(t.toString())
-}
-
-const zpad = (v,n=2) => ("0".repeat(n-1) + v).slice(-n)
-
-const getDateString = (tprl) => { return `${tprl.year}-${zpad(tprl.month)}-${zpad(tprl.day)}` }
-const getTimeString = (tprl) => { return `${zpad(tprl.hour)}:${zpad(tprl.minute)}` }
-const getDateTimeString = (tprl) => { return `${getDateString(tprl)} ${getTimeString(tprl)}` }
-const formatTimingForDisplay = (timing) => {
-  if (timing.length == 1) { return getDateString(timing[0])}
-  else {
-    let startstring = getDateTimeString(timing[0])
-    let endstring = getDateTimeString(timing[1])
-    let start = timing[0].toPlainDate()
-    let end = timing[1].toPlainDate()
-    if (start.equals(end)) { endstring = getTimeString(timing[1]) }
-    return `${startstring} - ${endstring}`
-  }
 }
 
 const onCreateNewEvent = (ev) => {

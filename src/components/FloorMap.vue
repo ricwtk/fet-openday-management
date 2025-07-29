@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref, defineAsyncComponent, computed, nextTick } from 'vue';
 import Marker from "../components/Marker.svg"
+import { formatTimingForDisplay } from '../utils/timeformat'
 const props = defineProps({
   date: String,
   building: String,
@@ -48,22 +49,22 @@ const toggleDot = (event, roomact) => {
   }
 }
 
-const zpad = (v,n=2) => ("0".repeat(n-1) + v).slice(-n)
-const getDateString = (tprl) => { return `${tprl.year}-${zpad(tprl.month)}-${zpad(tprl.day)}` }
-const getTimeString = (tprl) => { return `${zpad(tprl.hour)}:${zpad(tprl.minute)}` }
-const getDateTimeString = (tprl) => { return `${getDateString(tprl)} ${getTimeString(tprl)}` }
-const formatTimingForDisplay = (timestr) => {
-  let timing = timestr.map(t => Temporal.PlainDateTime.from(t))
-  if (timing.length == 1) { return getDateString(timing[0])}
-  else {
-    let startstring = getDateTimeString(timing[0])
-    let endstring = getDateTimeString(timing[1])
-    let start = timing[0].toPlainDate()
-    let end = timing[1].toPlainDate()
-    if (start.equals(end)) { endstring = getTimeString(timing[1]) }
-    return `${startstring} - ${endstring}`
-  }
-}
+// const zpad = (v,n=2) => ("0".repeat(n-1) + v).slice(-n)
+// const getDateString = (tprl) => { return `${tprl.year}-${zpad(tprl.month)}-${zpad(tprl.day)}` }
+// const getTimeString = (tprl) => { return `${zpad(tprl.hour)}:${zpad(tprl.minute)}` }
+// const getDateTimeString = (tprl) => { return `${getDateString(tprl)} ${getTimeString(tprl)}` }
+// const formatTimingForDisplay = (timestr) => {
+//   let timing = timestr.map(t => Temporal.PlainDateTime.from(t))
+//   if (timing.length == 1) { return getDateString(timing[0])}
+//   else {
+//     let startstring = getDateTimeString(timing[0])
+//     let endstring = getDateTimeString(timing[1])
+//     let start = timing[0].toPlainDate()
+//     let end = timing[1].toPlainDate()
+//     if (start.equals(end)) { endstring = getTimeString(timing[1]) }
+//     return `${startstring} - ${endstring}`
+//   }
+// }
 
 </script>
 <template>
