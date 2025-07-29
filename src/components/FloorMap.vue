@@ -97,7 +97,7 @@ const toggleDot = (event, roomact) => {
       <div class="font-bold">{{ selectedDot.room }}</div>
       <div v-for="act in selectedDot.activities" class="flex flex-row items-center gap-1">
         <div class="flex flex-col">
-          <div><Chip :label="act.type"/> {{ act.name }}</div>
+          <div><Tag :value="act.type"/> {{ act.name }}</div>
           <div>{{ formatTimingForDisplay(act.timing) }}</div>
         </div>
         <div><Button link><SquareArrowOutUpRight></SquareArrowOutUpRight></Button></div>
