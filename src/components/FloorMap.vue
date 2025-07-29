@@ -25,9 +25,9 @@ const floordata = computed(() => {
 })
 console.log(floordata)
 
-const roomswithactivity = computed(() => {
+const roomsandactivity = computed(() => {
   let rooms = Object.keys(locationlist[props.building][props.floor].rooms)
-  rooms = rooms.filter(r => props.activities.map(act => act.venue[2]).includes(r))
+  // rooms = rooms.filter(r => props.activities.map(act => act.venue[2]).includes(r))
   rooms = rooms.map(r => ({ room: r, activities: props.activities.filter(act => act.venue[2] == r) }))
   return rooms
 })
@@ -45,8 +45,11 @@ const toggleDot = (event, roomact) => {
     selectedDot.value = null
   } else {
     selectedDot.value = roomact
-
-    nextTick(() => dotpopover.value.show(event))
+    nextTick(() => {
+      if (selectedDot.value.activities.length > 0) {
+        dotpopover.value.show(event)
+      }
+    })
   }
 }
 
@@ -80,9 +83,10 @@ const toggleDot = (event, roomact) => {
       <template #content>
         <div class="relative w-full text-primary" v-if="floordata.component">
           <component :is="floordata.component" class="!w-full !h-full"/>
-          <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" v-for="ra in roomswithactivity"
+          <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot" v-for="ra in roomsandactivity"
+            :class="ra.activities.length > 0 ? 'text-primary' : 'text-gray-300'"
             :style="{ 'left': `${floordata.rooms[ra.room].x}%`, 'top': `${floordata.rooms[ra.room].y}%` }" 
-            @click="toggleDot($event, ra)"
+            @click="toggleDot($event, ra)" v-tooltip="ra.room"
           >
             <Marker></Marker>
           </div>

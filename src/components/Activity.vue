@@ -8,7 +8,7 @@ const props = defineProps(["activity"])
     <template #title>
       <div class="flex flex-row gap-2">
         <span class="font-bold">{{ activity.name }}</span>
-        <span class="text-sm"><Tag :value="activity.type" severity="primary"></Tag></span>
+        <span class="text-sm"><Tag :value="activity.type" severity="primary"/></span>
       </div>
     </template>
     <template #content>
