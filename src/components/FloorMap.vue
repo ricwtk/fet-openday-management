@@ -2,6 +2,7 @@
 import { defineProps, ref, defineAsyncComponent, computed, nextTick } from 'vue';
 import Marker from "../components/Marker.svg"
 import { formatTimingForDisplay } from '../utils/timeformat'
+import { CalendarClock, Users, MapPinned } from "lucide-vue-next"
 const props = defineProps({
   date: String,
   building: String,
@@ -71,9 +72,9 @@ const toggleDot = (event, roomact) => {
   <Breadcrumb :model="maphierarchy" :pt="{ 
     'itemLabel': {'class': '!cursor-default' }
   }"/>
-  {{ props.activities }}
+  <!-- {{ props.activities }}
   <br>
-  {{ roomswithactivity }}
+  {{ roomswithactivity }} -->
   <Card pt:root:class="self-center flex flex-center justify-center w-full max-w-5xl" v-if="props.activities">
     <!-- <div class="!w-full !max-w-5xl"> -->
       <template #content>
@@ -103,4 +104,37 @@ const toggleDot = (event, roomact) => {
       </div>
     </div>
   </Popover>
+
+  <DataView :value="props.activities" pt:root:class="my-3">
+    <template #list="slotProps">
+      <div class="flex flex-col gap-2">
+        <Card v-for="(item, index) in slotProps.items" :key="index">
+          <template #title>
+            <div class="flex flex-row gap-2">
+              <span class="font-bold">{{ item.name }}</span>
+              <span class="text-sm"><Tag :value="item.type" severity="primary"></Tag></span>
+            </div>
+          </template>
+          <template #content>
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-row gap-1">
+                <MapPinned class="text-primary-400"></MapPinned>
+                <Breadcrumb :model="item.venue" pt:root:class="!p-0">
+                  <template #item="{ item }">
+                    <span>{{ item }}</span>
+                  </template>
+                </Breadcrumb>
+              </div>
+              <div class="flex flex-row gap-1"><CalendarClock class="text-primary-400"/>{{ formatTimingForDisplay(item.timing) }}</div>
+              <div class="flex flex-row gap-1"><Users class="text-primary-400"></Users>
+                <Tag v-for="pic in item.pic" :value="pic" severity="secondary"></Tag>
+              </div>
+              <Message>{{ item.remarks ? item.remarks : "No remarks" }}</Message>
+            </div>
+            <!-- {{ item }} -->
+          </template>
+        </Card>
+      </div>
+    </template>
+  </DataView>
 </template>
