@@ -1,5 +1,5 @@
 <script setup>
-import { ref,computed,useTemplateRef, onMounted, watch, defineProps } from "vue"
+import { ref,computed,useTemplateRef, onMounted, watch } from "vue"
 import { Building2, Layers2, Milestone } from 'lucide-vue-next';
 import { Breadcrumb, TabList } from "primevue";
 import { useRoute, useRouter } from "vue-router";
@@ -96,7 +96,7 @@ const activitylistondate = computed(() => activitylist.filter(activity => {
   } else {
     return true
   }
-}))
+}).sort( (a,b) => Temporal.PlainDateTime.compare(Temporal.PlainDateTime.from(a.timing[0]), Temporal.PlainDateTime.from(b.timing[0])) ))
 
 // const acttypeoptions = computed(() => activitylistondate.value.reduce((acc,activity) => {
 //   if (!acc.includes(activity.type)) {
