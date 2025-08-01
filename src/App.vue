@@ -132,9 +132,11 @@ const activitylistondate = computed(() => activitylist.filter(activity => {
     <SelectButton v-model="selectedday" :options="dayoptions" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
     <SelectButton v-if="selectedday" v-model="selectedstructure" :options="structureoptions" optionLabel="name" :allowEmpty="false" pt:pctogglebutton:root:class="!text-primary !bg-primary-100 !border-primary-100 !font-bold"></SelectButton>
   </div>
-  <router-view v-slot="{ Component }" class="mt-2">
-    <component :is="Component" :activities="activitylistondate"></component>
-  </router-view>
+  <div class="w-100% mt-2 flex flex-col items-center gap-2">
+    <router-view v-slot="{ Component }" class="max-w-4xl w-full">
+      <component :is="Component" :activities="activitylistondate"></component>
+    </router-view>
+  </div>
   <!-- <Tabs v-model:value="selectedstructure" class="mt-2" >
     <TabList pt:tabList:class="justify-center">
       <Tab v-for="structopt in structureoptions" :value="structopt">{{ structopt }}</Tab>
