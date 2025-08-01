@@ -10,7 +10,9 @@ const maps = import.meta.glob('../assets/mapfiles/*.svg', {
   import: 'default',
 })
 import { locationlist } from "../data/locationmap";
-const mappath = `../assets/mapfiles/${locationlist[props.activity.venue[0]][props.activity.venue[1]].mapfile}`
+import Marker from "../components/Marker.svg"
+const floor = locationlist[props.activity.venue[0]][props.activity.venue[1]]
+const mappath = `../assets/mapfiles/${floor.mapfile}`
 const mapcomponent = defineAsyncComponent(maps[mappath])
 </script>
 <template>
@@ -32,8 +34,14 @@ const mapcomponent = defineAsyncComponent(maps[mappath])
           </Breadcrumb>
           <Button link class="!p-0 !text-gray-400" @click="showMap=!showMap"><EyeOff v-if="showMap"/><Eye v-else/></Button>
         </div>
-        <div v-if="showMap" class="flex flex-row justify-center">
-          <component :is="mapcomponent" class="!w-8/10 !h-full"/>
+        <div v-if="showMap" class="flex flex-row justify-center relative w-8/10 self-center">
+          <component :is="mapcomponent" class="!w-full !h-full"/>
+          <div ref="dots" class="!absolute -translate-x-1/2 -translate-y-1/2 dot text-primary"
+            v-if="Object.keys(floor.rooms).includes(props.activity.venue[2])"
+            :style="{ 'left': `${floor.rooms[props.activity.venue[2]].x}%`, 'top': `${floor.rooms[props.activity.venue[2]].y}%` }" 
+          >
+            <Marker></Marker>
+          </div>
         </div>
         <div class="flex flex-row gap-1 items-center"><CalendarClock class="text-primary-400"/>{{ formatTimingForDisplay(activity.timing) }}</div>
         <div class="flex flex-row gap-1 items-center"><Users class="text-primary-400"></Users>
