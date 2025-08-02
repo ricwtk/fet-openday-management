@@ -60,7 +60,7 @@ const activitiesatthisloc = computed(() => {
 
 <template>
   <Panel pt:content:class="flex flex-col justify-center">
-    <div>{{ props.activities }}</div>
+    <!-- <div>{{ props.activities }}</div> -->
     <div class="flex flex-row justify-center">
       <template v-for="(locopt, locindex) in locationoptions">
         <Button class="mx-1" variant="outlined" @click="popoverloc($event,locindex)" aria-haspopup="true">
