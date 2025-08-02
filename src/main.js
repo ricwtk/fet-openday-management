@@ -50,7 +50,7 @@ const routes = [
   }
 ]
 const router = createRouter({
-  history: createWebHistory('/fet-openday-management/'),
+  history: createWebHistory(process.env.NODE_ENV === 'production' ? '/fet-openday-management/' : '/'),
   routes
 })
 app.use(router)
