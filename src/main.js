@@ -50,7 +50,7 @@ const routes = [
   }
 ]
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/fet-openday-management/'),
   routes
 })
 app.use(router)
