@@ -1,7 +1,7 @@
 <script setup>
 import { defineAsyncComponent, ref, watch, shallowRef, computed } from "vue";
 import { locationlist } from "../data/locationmap";
-import { useRoute } from "vue-router";
+// import { useRoute } from "vue-router";
 import { MapPinMinusInside } from 'lucide-vue-next';
 import Marker from "../components/Marker.svg"
 
@@ -22,7 +22,7 @@ const buildings = ref(Object.keys(locationlist).map(bname => {
   return b
 }))
 
-const route = useRoute()
+// const route = useRoute()
 
 const selectedfloor = ref()
 
@@ -96,7 +96,7 @@ const prettyRoomsJSON = computed(() => JSON.stringify(selectedfloor.value.rooms,
 
 <template>
   <!-- <div>{{ buildings }}</div> -->
-  <FieldSet class="text-center" :legend="route.name">
+  <FieldSet class="text-center" legend="Location Assignment">
     <CascadeSelect placeholder="Select a floor" :options="buildings" optionLabel="fname" optionGroupLabel="bname" :optionGroupChildren="['floors']" v-model="selectedfloor"/>
 
     <div class="flex flex-col align-center gap-2 mt-2" v-if="selectedfloor">
