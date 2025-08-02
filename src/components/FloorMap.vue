@@ -4,7 +4,7 @@ import Marker from "../components/Marker.svg"
 import { formatTimingForDisplay } from '../utils/timeformat'
 import Activity from './Activity.vue';
 const props = defineProps({
-  date: String,
+  // date: String,
   building: String,
   floor: String,
   activities: Array
