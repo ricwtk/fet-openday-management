@@ -33,7 +33,7 @@ const activitytypes = computed(() => {
 
 </script>
 <template>
-  <Panel pt:content:class="flex flex-col justify-center !w-full !max-w-5xl">
+  <Panel pt:content:class="flex flex-col justify-center">
     <ToggleButton v-model="groupbytype" onLabel="Grouped by activity type" offLabel="Group by activity type">
       <template #icon="{value}"><LayoutList v-if="value" /><List v-else /></template>
     </ToggleButton>
