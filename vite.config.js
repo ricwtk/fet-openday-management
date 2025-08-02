@@ -7,6 +7,7 @@ import svgLoader from "vite-svg-loader";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/fet-openday-management/",
   plugins: [
     svgLoader(),
     vue(),
