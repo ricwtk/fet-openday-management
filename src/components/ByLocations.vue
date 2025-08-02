@@ -79,7 +79,7 @@ const activitiesatthisloc = computed(() => {
 </script>
 
 <template>
-  <Panel pt:content:class="flex flex-col justify-center">
+  <Panel pt:content:class="flex flex-col justify-center !w-full !max-w-5xl">
     <!-- <div>{{ props.activities }}</div> -->
     <div class="flex flex-row justify-center">
       <template v-for="(locopt, locindex) in locationoptions">
