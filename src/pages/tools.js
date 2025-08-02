@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import Aura from '@primeuix/themes/aura';
 import '../style.css'
-import App from './Index.vue'
+import App from './Tools.vue'
 import { createWebHistory, createRouter } from 'vue-router'
 import Tools from '../components/Toollist.vue';
 import Root from '../Root.vue';

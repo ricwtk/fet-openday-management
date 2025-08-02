@@ -1,20 +1,27 @@
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import { LayoutList, List } from 'lucide-vue-next';
-import { useRoute, useRouter } from 'vue-router';
+// import { useRoute, useRouter } from 'vue-router';
 
 const props = defineProps({
   activities: Array
 })
 
-const route = useRoute();
-const router = useRouter();
+const url = new URL(window.location)
+const params = new URLSearchParams(url.search)
+console.log(params)
+
+// const route = useRoute();
+// const router = useRouter();
 const groupbytype = ref(false)
-if (route.query.groupbytype == "true") {
-  groupbytype.value = true
-}
+onMounted(() => {
+  if (params.get("groupbytype")) { groupbytype.value = params.get("groupbytype") == "true" } 
+})
 watch(groupbytype, (newV) => {
-  router.push({path: route.fullPath, query: { groupbytype: newV }})
+  params.set("groupbytype", newV)
+  url.search = params.toString();
+  history.pushState({}, '', url.toString());
+  // router.push({path: route.fullPath, query: { groupbytype: newV }})
 })
 
 const activitytypes = computed(() => {

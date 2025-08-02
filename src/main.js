@@ -4,7 +4,7 @@ import Aura from '@primeuix/themes/aura';
 import './style.css'
 import App from './App.vue'
 import { createWebHistory, createRouter } from 'vue-router'
-import Tools from './components/Tools.vue';
+import Tools from './components/Toollist.vue';
 import Root from './Root.vue';
 import LocationAssignment from './components/LocationAssignment.vue';
 import Tooltip from 'primevue/tooltip';

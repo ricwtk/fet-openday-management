@@ -1,16 +1,27 @@
 <script setup>
 import { Building2, Layers2 } from 'lucide-vue-next';
-import { ref, computed, useTemplateRef } from 'vue';
+import { ref, computed, useTemplateRef, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import FloorMap from './FloorMap.vue';
 
 const props = defineProps({
-  date: String,
+  // date: String,
   activities: Array,
-  building: String,
-  floor: String
+  // building: String,
+  // floor: String
 })
 
-const router = useRouter()
+// const router = useRouter()
+const url = new URL(window.location)
+const params = new URLSearchParams(url.search)
+console.log(params)
+
+const building = ref("")
+const floor = ref("")
+onMounted(() => {
+  if (params.get("building")) { building.value = params.get("building") } 
+  if (params.get("floor")) { floor.value = params.get("floor") } 
+})
 
 const locationlist = props.activities.reduce((loclist,activity) => {
   if (!Object.keys(loclist).includes(activity.venue[0])) {
@@ -45,14 +56,23 @@ const flooroptions = computed(() => {
   }, {})
 })
 
-const openmap = (building, floor) => { console.log(building, floor)
-  router.push({ name: "Floor Map", params: { building: building, floor: floor } })
+const openmap = (newbuilding, newfloor) => { 
+  console.log(newbuilding, newfloor)
+  building.value = newbuilding
+  floor.value = newfloor
+  
+  params.set("building", newbuilding)
+  params.set("floor", newfloor)
+  url.search = params.toString();
+  history.pushState({}, '', url.toString());
+
+  // router.push({ name: "Floor Map", params: { building: building, floor: floor } })
 }
 
 const activitiesatthisloc = computed(() => {
-  if (props.building && props.floor) {
+  if (building.value && floor.value) {
     return props.activities.filter(act => {
-      return act.venue[0] == props.building && act.venue[1] == props.floor
+      return act.venue[0] == building.value && act.venue[1] == floor.value
     })
   } else return []
 })
@@ -81,8 +101,9 @@ const activitiesatthisloc = computed(() => {
         </Menu>
       </template>
     </div>
-    <router-view v-slot="{ Component }">
+    <FloorMap :building="building" :floor="floor" :activities="activitiesatthisloc" v-if="building && floor"/>
+    <!-- <router-view v-slot="{ Component }">
       <component :is="Component" :activities="activitiesatthisloc"></component>
-    </router-view>
+    </router-view> -->
   </Panel>
 </template>
