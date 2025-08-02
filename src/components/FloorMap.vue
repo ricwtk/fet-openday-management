@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, defineAsyncComponent, computed, nextTick } from 'vue';
+import { ref, defineAsyncComponent, computed, nextTick } from 'vue';
 import Marker from "../components/Marker.svg"
 import { formatTimingForDisplay } from '../utils/timeformat'
 import Activity from './Activity.vue';

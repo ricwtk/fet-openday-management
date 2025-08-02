@@ -18,7 +18,7 @@ const mapcomponent = defineAsyncComponent(maps[mappath])
 <template>
   <Card>
     <template #title>
-      <div class="flex flex-row gap-2">
+      <div class="flex flex-row gap-2 items-center">
         <span class="font-bold">{{ activity.name }}</span>
         <span class="text-sm"><Tag :value="activity.type" severity="primary"/></span>
       </div>

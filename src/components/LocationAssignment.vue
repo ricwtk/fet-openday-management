@@ -2,7 +2,7 @@
 import { defineAsyncComponent, ref, watch, shallowRef, computed } from "vue";
 import { locationlist } from "../data/locationmap";
 import { useRoute } from "vue-router";
-import { Circle, CircleDot, MapPinMinusInside } from 'lucide-vue-next';
+import { MapPinMinusInside } from 'lucide-vue-next';
 import Marker from "../components/Marker.svg"
 
 console.log(locationlist)

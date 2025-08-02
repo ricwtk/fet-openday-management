@@ -2,7 +2,6 @@
 import { ref, watch, computed } from 'vue';
 import { LayoutList, List } from 'lucide-vue-next';
 import { useRoute, useRouter } from 'vue-router';
-import { item } from '@primeuix/themes/aura/breadcrumb';
 
 const props = defineProps({
   activities: Array

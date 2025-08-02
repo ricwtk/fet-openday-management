@@ -1,6 +1,6 @@
 <script setup>
 import { Building2, Layers2 } from 'lucide-vue-next';
-import { ref, computed, defineProps, useTemplateRef } from 'vue';
+import { ref, computed, useTemplateRef } from 'vue';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
@@ -56,15 +56,6 @@ const activitiesatthisloc = computed(() => {
     })
   } else return []
 })
-
-// import { useRouter } from 'vue-router'
-
-// const router = useRouter
-// router.afterEach((to, from) => {
-//   console.log(to.params)
-//   if (to.params.date) selectedday.value = to.params.date
-//   currentpagenavigationpath.value = [to.params.date, to.params.mode, to.params.main, to.params.sub].map(x => ({ "label": x }))
-// })
 </script>
 
 <template>
