@@ -6,6 +6,12 @@ import { MapPinMinusInside } from 'lucide-vue-next';
 import Marker from "../components/Marker.svg"
 
 console.log(locationlist)
+
+const maps = import.meta.glob('../assets/mapfiles/*.svg', {
+  query: '?component',
+  import: 'default',
+})
+
 const buildings = ref(Object.keys(locationlist).map(bname => {
   let b = {}
   b.bname = bname
@@ -14,9 +20,11 @@ const buildings = ref(Object.keys(locationlist).map(bname => {
     f.fname = fname
     f.parent = b
     f.mapfile = locationlist[bname][fname].mapfile
-    f.mapfilepath = new URL(`../assets/mapfiles/${f.mapfile}`, import.meta.url).href
+    f.mapfilepath = `../assets/mapfiles/${f.mapfile}`
+    f.component = defineAsyncComponent(maps[f.mapfilepath])
+    // f.mapfilepath = new URL(`../assets/mapfiles/${f.mapfile}`, import.meta.url).href
+    // f.component = shallowRef( defineAsyncComponent(() => import(/* @vite-ignore */f.mapfilepath)) )
     f.rooms = Object.keys(locationlist[bname][fname]).includes('rooms') ? locationlist[bname][fname].rooms : {}
-    f.component = shallowRef( defineAsyncComponent(() => import(/* @vite-ignore */f.mapfilepath)) )
     return f
   })
   return b
