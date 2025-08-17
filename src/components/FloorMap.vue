@@ -104,7 +104,7 @@ const toggleDot = (event, roomact) => {
           <div><Tag :value="act.type"/> {{ act.name }}</div>
           <div>{{ formatTimingForDisplay(act.timing) }}</div>
         </div>
-        <div><Button link><SquareArrowOutUpRight></SquareArrowOutUpRight></Button></div>
+        <!-- <div><Button link><SquareArrowOutUpRight></SquareArrowOutUpRight></Button></div> -->
       </div>
     </div>
   </Popover>
