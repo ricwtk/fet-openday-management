@@ -192,7 +192,90 @@ export const locationlist = {
     "UG": {
       "mapfile": "ub-UG.svg",
       "rooms": {
-        
+        "Library": {
+          "x": 60.4,
+          "y": 77.83
+        },
+        "Fresco": {
+          "x": 18.34,
+          "y": 25.88
+        },
+        "iLabs Makerspace": {
+          "x": 31.32,
+          "y": 81.85
+        },
+        "Kiosk 1": {
+          "x": 22.7,
+          "y": 15.98
+        },
+        "Kiosk 2": {
+          "x": 25.95,
+          "y": 15.88
+        },
+        "Kiosk 3": {
+          "x": 31.22,
+          "y": 15.78
+        },
+        "Kiosk 4": {
+          "x": 28.58,
+          "y": 26.37
+        },
+        "Kiosk 5": {
+          "x": 28.78,
+          "y": 31.37
+        },
+        "Kiosk 6": {
+          "x": 25.84,
+          "y": 31.07
+        },
+        "Kiosk 7": {
+          "x": 25.95,
+          "y": 26.47
+        },
+        "Lecture Theatre 1": {
+          "x": 49.66,
+          "y": 20.09
+        },
+        "Lecture Theatre 2": {
+          "x": 57.36,
+          "y": 20
+        },
+        "Lecture Theatre 3": {
+          "x": 64.66,
+          "y": 19.7
+        },
+        "Lecture Theatre 4": {
+          "x": 72.36,
+          "y": 19.51
+        },
+        "Career Hub": {
+          "x": 29.09,
+          "y": 66.85
+        },
+        "Opp. Career Hub": {
+          "x": 34.05,
+          "y": 64.01
+        },
+        "Opp. Library": {
+          "x": 41.15,
+          "y": 65.38
+        },
+        "Facing College": {
+          "x": 64.56,
+          "y": 56.85
+        },
+        "I luv SU": {
+          "x": 71.75,
+          "y": 65.09
+        },
+        "The Birds": {
+          "x": 65.67,
+          "y": 39.5
+        },
+        "Opp. The Birds": {
+          "x": 57.97,
+          "y": 47.15
+        }
       }
     },
     "L1": {
