@@ -189,6 +189,12 @@ export const locationlist = {
     },
   },
   "University Building": {
+    "UG": {
+      "mapfile": "ub-UG.svg",
+      "rooms": {
+        
+      }
+    },
     "L1": {
       "mapfile": "ub-L1.svg",
       "rooms": {
@@ -251,25 +257,117 @@ export const locationlist = {
     "LG": {
       "mapfile": "gc-LG.svg",
       "rooms": {
-        
+        "Digital Fashion Lab": {
+          "x": 63.65,
+          "y": 88.99
+        },
+        "Pattern Making Studio": {
+          "x": 44.9,
+          "y": 88.51
+        },
+        "Fashion Design Studio 1": {
+          "x": 25.34,
+          "y": 89.15
+        },
+        "Sewing Studio": {
+          "x": 32.13,
+          "y": 26.51
+        },
+        "Discussion Room": {
+          "x": 55.34,
+          "y": 28.75
+        },
+        "Fashion Innovation Lab/Centre for Fashion Enterprise": {
+          "x": 34.86,
+          "y": 57.67
+        },
+        "Admin/Academic Office": {
+          "x": 61.72,
+          "y": 56.06
+        }
       }
     },
     "G": {
       "mapfile": "gc-G.svg",
       "rooms": {
-        
+        "Hall 1": {
+          "x": 30.1,
+          "y": 79.78
+        },
+        "Pre Function": {
+          "x": 24.83,
+          "y": 53.33
+        },
+        "Function Room 1": {
+          "x": 40.34,
+          "y": 27.73
+        },
+        "Function Room 2": {
+          "x": 19.46,
+          "y": 27.3
+        },
+        "Lounge": {
+          "x": 61.62,
+          "y": 31.57
+        },
+        "Sunway Centre for Planetary Health": {
+          "x": 85.64,
+          "y": 82.23
+        }
       }
     },
     "L1": {
       "mapfile": "gc-L1.svg",
       "rooms": {
-        
+        "Hall 2": {
+          "x": 32.23,
+          "y": 78.75
+        },
+        "Pre Function": {
+          "x": 27.57,
+          "y": 53.9
+        },
+        "Hall 3": {
+          "x": 32.53,
+          "y": 35.27
+        },
+        "Function Room 3": {
+          "x": 86.25,
+          "y": 26.29
+        },
+        "Function Room 4": {
+          "x": 70.74,
+          "y": 26.84
+        },
+        "Function Room 5": {
+          "x": 81.18,
+          "y": 80.97
+        }
       }
     },
     "R": {
       "mapfile": "gc-R.svg",
       "rooms": {
-        
+        "Roof Top Terrace": {
+          "x": 67.4,
+          "y": 88
+        },
+        "Panoramic Suite": {
+          "x": 19.05,
+          "y": 82.38
+        },
+        "The Cube": {
+          "x": 18.55,
+          "y": 67.01
+        },
+        "Outdoor Deck": {
+          "x": 28.07,
+          "y": 92.59
+        },
+        "Roof Top Terrace Garden": {
+          "x": 74.69,
+          "y": 23.41
+        }
       }
     },
   }
