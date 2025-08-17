@@ -35,24 +35,6 @@ export const activitylist = [
   },
   {
     "type": "Showcase",
-    "name": "URock",
-    "venue": [
-      "University Building",
-      "UG",
-      "iLabs Makerspace"
-    ],
-    "timing": [
-      "2025-08-23T10:00:00",
-      "2025-08-23T16:00:00"
-    ],
-    "pic": [
-      "Sagili Bharadwaj Reddy",
-      "Chong"
-    ],
-    "remarks": "One table"
-  },
-  {
-    "type": "Showcase",
     "name": "Oil Palm Harvesting Robot",
     "venue": [
       "University Building",
@@ -67,7 +49,7 @@ export const activitylist = [
       "Tang Tiong Yew",
       "Interns"
     ],
-    "remarks": "Two tables\nOne-Two whiteboards"
+    "remarks": "Two tables\nOne whiteboards"
   },
   {
     "type": "Showcase",
@@ -126,42 +108,6 @@ export const activitylist = [
     "remarks": "Table\nTwo small whiteboards"
   },
   {
-    "type": "Showcase",
-    "name": "FYP (BCHE/BEEE) Posters",
-    "venue": [
-      "FET Labs",
-      "B1",
-      "Corridor"
-    ],
-    "timing": [
-      "2025-08-23T10:00:00",
-      "2025-08-23T16:00:00"
-    ],
-    "pic": [
-      "Prof Ker",
-      "Prof Nishanth",
-      "Ooi Ke Vin"
-    ],
-    "remarks": "three whiteboards"
-  },
-  {
-    "type": "Showcase",
-    "name": "DP BCHE Prototype",
-    "venue": [
-      "FET Labs",
-      "B1",
-      "Engineering Project Lab"
-    ],
-    "timing": [
-      "2025-08-23T10:00:00",
-      "2025-08-23T16:00:00"
-    ],
-    "pic": [
-      "Dr Ng"
-    ],
-    "remarks": "one table"
-  },
-  {
     "type": "Workshop",
     "name": "AI Mobile Robot",
     "venue": [
@@ -213,5 +159,59 @@ export const activitylist = [
       "Dr Saad Aslam"
     ],
     "remarks": ""
+  },
+  {
+    "type": "Showcase",
+    "name": "FYP (BCHE/BEEE) Posters",
+    "venue": [
+      "University Building",
+      "UG",
+      "Opp. Library"
+    ],
+    "timing": [
+      "2025-08-23T10:00:00",
+      "2025-08-23T16:00:00"
+    ],
+    "pic": [
+      "Prof Ker",
+      "Prof Nishanth",
+      "Ooi Ke Vin"
+    ],
+    "remarks": "two whiteboards"
+  },
+  {
+    "type": "Showcase",
+    "name": "URock",
+    "venue": [
+      "University Building",
+      "UG",
+      "Opp. Career Hub"
+    ],
+    "timing": [
+      "2025-08-23T10:00:00",
+      "2025-08-23T16:00:00"
+    ],
+    "pic": [
+      "Sagili Bharadwaj Reddy",
+      "Chong"
+    ],
+    "remarks": "One table"
+  },
+  {
+    "type": "Showcase",
+    "name": "DP BCHE Prototype",
+    "venue": [
+      "University Building",
+      "UG",
+      "Opp. Library"
+    ],
+    "timing": [
+      "2025-08-23T10:00:00",
+      "2025-08-23T16:00:00"
+    ],
+    "pic": [
+      "Dr Ng"
+    ],
+    "remarks": "one table"
   }
 ]
