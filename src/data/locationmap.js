@@ -192,7 +192,58 @@ export const locationlist = {
     "L1": {
       "mapfile": "ub-L1.svg",
       "rooms": {
-        
+        "JC1": {
+          "x": 64.15,
+          "y": 49.02
+        },
+        "JC2": {
+          "x": 18.85,
+          "y": 61.44
+        },
+        "JC3": {
+          "x": 19.46,
+          "y": 43.64
+        },
+        "Gallery": {
+          "x": 19.86,
+          "y": 21.09
+        },
+        "Lecture Theatre 5": {
+          "x": 60.71,
+          "y": 12.05
+        },
+        "Lecture Theatre 6": {
+          "x": 69.42,
+          "y": 12.42
+        },
+        "Film Shooting Studio": {
+          "x": 78.95,
+          "y": 12.23
+        },
+        "Function Room 2": {
+          "x": 91.52,
+          "y": 11.32
+        },
+        "Pre Function": {
+          "x": 38.41,
+          "y": 49.57
+        },
+        "Chancellor's Suite": {
+          "x": 27.47,
+          "y": 85.72
+        },
+        "Lecture Theatre 7": {
+          "x": 56.75,
+          "y": 87.18
+        },
+        "Lecture Theatre 8": {
+          "x": 73.68,
+          "y": 87.45
+        },
+        "Function Room 3": {
+          "x": 90.5,
+          "y": 85.54
+        }
       }
     },
   },
