@@ -14,7 +14,7 @@ export const activitylist = [
     "pic": [
       "Chew Zhe Zhi"
     ],
-    "remarks": "Whiteboard x1\nLarge Monitor x1\nTable and chair x1\nBarrier pole x6"
+    "remarks": "Whiteboard x1, Large Monitor x1, Table and chair x1, Barrier pole x6"
   },
   {
     "type": "Showcase",
@@ -49,7 +49,7 @@ export const activitylist = [
       "Tang Tiong Yew",
       "Interns"
     ],
-    "remarks": "Two tables\nOne whiteboards"
+    "remarks": "Two tables, One whiteboards"
   },
   {
     "type": "Showcase",
@@ -105,7 +105,7 @@ export const activitylist = [
       "Tang Wei Liang",
       "Lim Zhan Jin"
     ],
-    "remarks": "Table\nTwo small whiteboards"
+    "remarks": "Table, Two whiteboards"
   },
   {
     "type": "Workshop",
