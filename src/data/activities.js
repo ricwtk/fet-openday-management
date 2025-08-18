@@ -166,7 +166,7 @@ export const activitylist = [
     "venue": [
       "University Building",
       "UG",
-      "Opp. Library"
+      "iLabs Makerspace"
     ],
     "timing": [
       "2025-08-23T10:00:00",
@@ -185,7 +185,7 @@ export const activitylist = [
     "venue": [
       "University Building",
       "UG",
-      "Opp. Career Hub"
+      "iLabs Makerspace"
     ],
     "timing": [
       "2025-08-23T10:00:00",
@@ -203,7 +203,7 @@ export const activitylist = [
     "venue": [
       "University Building",
       "UG",
-      "Opp. Library"
+      "iLabs Makerspace"
     ],
     "timing": [
       "2025-08-23T10:00:00",
