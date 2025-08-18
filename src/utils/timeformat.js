@@ -1,3 +1,10 @@
+import { Temporal } from "@js-temporal/polyfill";
+
+// Fallback assignment if native Temporal is missing
+if (typeof globalThis.Temporal === "undefined") {
+  globalThis.Temporal = Temporal;
+}
+
 export const zpad = (v,n=2) => ("0".repeat(n-1) + v).slice(-n)
 export const getDateString = (tprl) => { return `${tprl.year}-${zpad(tprl.month)}-${zpad(tprl.day)}` }
 export const getTimeString = (tprl) => { return `${zpad(tprl.hour)}:${zpad(tprl.minute)}` }

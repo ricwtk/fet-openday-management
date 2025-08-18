@@ -2,6 +2,13 @@
 import { ref,computed, onMounted, watch } from "vue"
 // import { useRoute, useRouter } from "vue-router";
 
+import { Temporal } from "@js-temporal/polyfill";
+
+// Fallback assignment if native Temporal is missing
+if (typeof globalThis.Temporal === "undefined") {
+  globalThis.Temporal = Temporal;
+}
+
 import { activitylist } from "../data/activities";
 import Topbar from "../components/Topbar.vue";
 

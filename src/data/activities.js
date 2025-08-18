@@ -14,7 +14,7 @@ export const activitylist = [
     "pic": [
       "Chew Zhe Zhi"
     ],
-    "remarks": "Whiteboard x1, Large Monitor x1, Table and chair x1, Barrier pole x6"
+    "remarks": "Whiteboard x1, Large Monitor x1, Table and chair x1, Barrier pole (Barricades) x6"
   },
   {
     "type": "Showcase",

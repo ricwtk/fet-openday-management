@@ -5,6 +5,13 @@ import { locationlist } from "../data/locationmap";
 import { CalendarClock, MapPinned, Users, Copy, SquareX } from 'lucide-vue-next';
 import { formatTimingForDisplay } from '../utils/timeformat'
 
+import { Temporal } from "@js-temporal/polyfill";
+
+// Fallback assignment if native Temporal is missing
+if (typeof globalThis.Temporal === "undefined") {
+  globalThis.Temporal = Temporal;
+}
+
 const activities = ref(activitylist.map(activity => {
   activity.timing = activity.timing.map(timing => Temporal.PlainDateTime.from(timing))
   return activity
