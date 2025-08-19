@@ -29,7 +29,10 @@ export const activitylist = [
       "2025-08-23T16:00:00"
     ],
     "pic": [
-      "Tang Wei Liang"
+      "Tang Wei Liang",
+      "Wong Jing Sian",
+      "Joe Tan",
+      "Cheryl Phun"
     ],
     "remarks": null
   },
@@ -47,7 +50,12 @@ export const activitylist = [
     ],
     "pic": [
       "Tang Tiong Yew",
-      "Interns"
+      "Mohanad Hany Mohamed Abdelhalim Nassar",
+      "Jun Shen Wong",
+      "Lan Yoon Shin",
+      "Ismail Mehtiyev",
+      "Danil Ziyatdinov",
+      "Bassam Shakeel",
     ],
     "remarks": "Two tables, One whiteboards"
   },
