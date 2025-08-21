@@ -1,6 +1,23 @@
 export const activitylist = [
   {
     "type": "Showcase",
+    "name": "Robotic Arms, Humanoid and Quadruped Robots, HiWonder AI Mobile Robot",
+    "venue": [
+      "FET Labs",
+      "G",
+      "Collaborative Robots and Industrial Automation (CRIA) Lab"
+    ],
+    "timing": [
+      "2025-08-23T10:00:00",
+      "2025-08-23T16:00:00"
+    ],
+    "pic": [
+      "Dr Riady", "Tan Din Xuen"
+    ],
+    "remarks": ""
+  },
+  {
+    "type": "Showcase",
     "name": "Sarawak Drone",
     "venue": [
       "FET Labs",
