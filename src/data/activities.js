@@ -31,7 +31,7 @@ export const activitylist = [
     "pic": [
       "Dr Tang Tiong Yew"
     ],
-    "remarks": null
+    "remarks": "Two tables, One whiteboards"
   },
   {
     "type": "Showcase",
