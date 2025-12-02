@@ -105,9 +105,9 @@ export const activitylist = [
     "type": "Workshop",
     "name": "Experience AI in Action",
     "venue": [
-      "FET Labs",
-      "B1",
-      "Engineering Project Lab"
+      "University Building",
+      "L2",
+      "UW-2-6"
     ],
     "timing": [
       "2025-12-06T13:00:00",
