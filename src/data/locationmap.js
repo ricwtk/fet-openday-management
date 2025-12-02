@@ -335,6 +335,11 @@ export const locationlist = {
         }
       }
     },
+    "L2": {
+      "mapfile": "ub-L2.svg",
+      "rooms": {
+      }
+    }
   },
   "Graduate Centre": {
     "LG": {
