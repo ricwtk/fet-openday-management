@@ -103,6 +103,23 @@ export const activitylist = [
   },
   {
     "type": "Workshop",
+    "name": "Exploring Civil Engineering through Experiments",
+    "venue": [
+      "FET Labs",
+      "L1",
+      "Advanced Computing Lab 1"
+    ],
+    "timing": [
+      "2025-12-06T11:00:00",
+      "2025-12-06T13:00:00"
+    ],
+    "pic": [
+      "Dr Ean Lee Woen"
+    ],
+    "remarks": ""
+  },
+  {
+    "type": "Workshop",
     "name": "Experience AI in Action",
     "venue": [
       "University Building",
