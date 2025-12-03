@@ -136,6 +136,23 @@ export const activitylist = [
     "remarks": ""
   },
   {
+    "type": "Showcase",
+    "name": "Charger Plug and Solar Project",
+    "venue": [
+      "University Building",
+      "UG",
+      "Opp. Library"
+    ],
+    "timing": [
+      "2025-12-06T10:00:00",
+      "2025-12-06T16:00:00"
+    ],
+    "pic": [
+      "Dr Ranjit"
+    ],
+    "remarks": "one table"
+  },
+  {
     "type": "Lounge",
     "name": "Lecturer Lounge",
     "venue": [
